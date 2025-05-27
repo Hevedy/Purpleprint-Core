@@ -1,0 +1,39 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Purpleprint - Core",
+	"Description": "Core of purpleprint elements and functions",
+	"Category": "Purpleprint",
+	"CreatedBy": "Hevedy",
+	"CreatedByURL": "https://www.hevedy.com/",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "https://www.hevedy.com/about/contact.html",
+	"Modules": [
+		{
+			"Name": "PurpleprintCore",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "PurpleprintCoreEditor",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit"
+		}
+	],
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Plugins": [
+		{
+			"Name": "CableComponent",
+			"Enabled": true
+		},
+		{
+			"Name": "Niagara",
+			"Enabled": true
+		}
+	]
+}
