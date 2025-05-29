@@ -15,24 +15,28 @@ Unreal® Engine, Copyright 1998 – 2025, Epic Games, Inc. All rights reserved.
 
 
 
-## Modules:
+## Core Modules:
 
-### Editor Module:
-Camera tracking framework to get from Blueprints and different tools the location of the viewport camera in realtime.  
+### Editor Module (Classes & Library):
+Camera tracking framework to get from Blueprints and different tools the location of the viewport camera in realtime.   
 
 > - FVector GetEditorActiveCameraLocation()  
 >   Get realtime camera location from the viewport in editor.  
+
 > - FRotator GetEditorActiveCameraRotation()  
 >   Get realtime camera rotation from the viewport in editor.  
 
-### Manager Component & Actor:
-Specific actors with tick enabled in editor and realtime camera tracking in-editor and in-game as base for any kind of manager in the engine.
+### Purpleprint Manager (Component & Actor):
+Specific actors with tick enabled in the editor and real-time camera tracking, both in-editor and in-game. These serve as the base for any kind of manager within the engine.  
 
-### Cable Component:
-Edited cable component so it simulates in local space, in case you need a cable inside a moving actor, like a car.  
+### Purpleprint HUD & Widget (Classes):
+Access native engine subtitles and other useful features to serve as a foundation for game development.  
+
+### Purpleprint Cable (Component):
+A modified cable component that simulates in local space, useful when you need a cable inside a moving actor, such as a car.  
 
 ### Math Library:
-A set of different utilities non exposed or missing in the engine, so makes the workflow faster.  
+A set of utility functions that are either missing or not exposed in the engine, designed to speed up workflow.  
 
 > - float Log2(float Value)  
 
@@ -134,7 +138,7 @@ A set of different utilities non exposed or missing in the engine, so makes the 
 
 
 ### Random Library:
-New nodes to get random points in space taking less calls.  
+New nodes for generating random points in space with fewer function calls.  
 
 > - int32 GetRandomIndexByWeight( const TArray<float> Weights)  
 
@@ -172,7 +176,7 @@ New nodes to get random points in space taking less calls.
 
 
 ### Misc Library:
-Different functions to clone actors, get directions, split vectors and other useful elements.  
+A collection of utility functions for cloning actors, calculating directions, splitting vectors, and other helpful operations.  
 
 > - EPurpleCoreAxis PurpleCoreAlignAxisToAxis(EPurpleCoreAlignAxis Align)  
 
@@ -299,6 +303,71 @@ Different functions to clone actors, get directions, split vectors and other use
 
 > - bool SetActorStaticMeshMaterials(AStaticMeshActor* Actor, TArray<UMaterialInterface*> Materials)  
 
+### Platform Library:  
+Utility functions for retrieving object names, build types, computer specifications, and monitor information.  
+
+> - static FString GetObjectFullName(UObject* Object)
+
+> - static FString GetSoftObjectName(TSoftObjectPtr<UObject> InObject)
+
+> - static FName GetPersistentLevelName(class UObject* WorldContextObject)
+
+> - static FName GetStreamLevelNameFromActor(AActor* Actor)
+
+> - static FName GetStreamLevelNameFromReference(const TSoftObjectPtr<UWorld> World)
+
+> - static FName GetCorrectAssetName(const FString String)
+
+> - static bool IsEditorBuild()
+
+> - static bool IsDebugBuild()
+
+> - static bool IsDevelopmentBuild()
+
+> - static bool IsShippingBuild()
+
+> - static void GetPrimaryMonitorResolution(int32& Width, int32& Height)  
+>   Returns the primary monitor resolution.
+
+> - static TArray<FPurpleDisplayInfo> GetMonitorsInfo()
+
+> - static int32 GetMonitorsNum()
+
+> - static FPurpleDisplayInfo GetPrimaryMonitorInfo()
+
+> - static int32 GetPrimaryMonitorIndex()
+
+> - static FString GetPrimaryMonitorName()
+
+> - static bool IsIndexPrimaryMonitor(const int32 Index)
+
+> - static FPurpleDisplayInfo GetMonitorInfoByIndex(const int32 Index)
+
+> - static FString GetMonitorName(const int32 Index)
+
+> - static bool GetSupportedFullscreenResolutionsByIndex(TArray<FIntPoint>& Resolutions, const int32 Index)
+>   FIntPoint not exposed to Blueprints sadly
+
+> - static int32 DateTimeToUnixTimeStamp(const FDateTime& DateTime)
+
+> - static int64 DateTimeToUnixTimeStamp64(const FDateTime& DateTime)
+
+> - static FString GetCPUBrandName()
+
+> - static FString GetCPUVendorName()
+
+> - static int32 GetCPUCores()
+
+> - static FString GetGPUBrandName()
+
+> - static FString GetGPUDriverInfo()
+
+> - static FString GetOSVersion()
+
+> - static FString GetNetRoleString(const ENetRole Role)
+
+> - static FString GetNetModeString(const ENetMode Mode)  
+>   Undefined for Blueprints so cannot be exposed
 
 ## Websites:
 - [Purpleprint Website][PurpleprintWeb]
