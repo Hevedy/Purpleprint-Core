@@ -38,6 +38,9 @@ protected:
 public:
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Editor|Camera", meta = (DevelopmentOnly))
+	static FTransform GetEditorActiveCameraTransform();
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Editor|Camera", meta = (DevelopmentOnly))
 	static FVector GetEditorActiveCameraLocation();
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Editor|Camera", meta = (DevelopmentOnly))

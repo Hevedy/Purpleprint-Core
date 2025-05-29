@@ -18,23 +18,24 @@ PurpleprintCoreMiscEditor.cpp
 #include "PurpleprintCoreMiscEditor.h"
 #include "PurpleprintCoreCameraTrackerEditor.h"
 
-#include "Engine/World.h"
-#include "EditorViewportClient.h"
-#include "Editor.h"
-#include "LevelEditor.h"
-#include "LevelEditorViewport.h"
-#include "Engine/Engine.h"
-
 
 UPurpleprintCoreMiscEditor::UPurpleprintCoreMiscEditor( const class FObjectInitializer& ObjectInitializer ) 
 {
 
 }
 
+FTransform UPurpleprintCoreMiscEditor::GetEditorActiveCameraTransform()
+{
+#if WITH_EDITOR
+	return FPurpleprintCoreCameraTrackerEditor::GetLastCameraTransform();
+#endif
+	return FTransform();
+}
+
 FVector UPurpleprintCoreMiscEditor::GetEditorActiveCameraLocation()
 {
 #if WITH_EDITOR
-	FPurpleprintCoreCameraTrackerEditor::GetLastCameraLocation();
+	return FPurpleprintCoreCameraTrackerEditor::GetLastCameraLocation();
 #endif
 	return FVector::ZeroVector;
 }
@@ -42,7 +43,7 @@ FVector UPurpleprintCoreMiscEditor::GetEditorActiveCameraLocation()
 FRotator UPurpleprintCoreMiscEditor::GetEditorActiveCameraRotation()
 {
 #if WITH_EDITOR
-	FPurpleprintCoreCameraTrackerEditor::GetLastCameraRotation();
+	return FPurpleprintCoreCameraTrackerEditor::GetLastCameraRotation();
 #endif
 	return FRotator::ZeroRotator;
 }

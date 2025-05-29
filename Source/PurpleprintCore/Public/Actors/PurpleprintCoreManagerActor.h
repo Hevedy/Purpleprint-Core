@@ -37,13 +37,13 @@ public:
 	// Sets default values for this actor's properties
 	APurpleprintCoreManagerActor ( const FObjectInitializer& ObjectInitializer );
 
-	UPROPERTY(BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* SceneComp;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UBillboardComponent* IconBB;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UPurpleprintCoreManagerComponent* ManagerComp;
 
 #if WITH_EDITORONLY_DATA

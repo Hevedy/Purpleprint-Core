@@ -36,7 +36,7 @@ void UPurpleprintCoreManagerComponent::TickComponent(float DeltaTime, enum ELeve
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	WorldCameraLocation = UPurpleprintCoreMisc::GetActiveCameraLocation(this);
+	WorldCameraLocation = UPurpleprintCoreMisc::GetActiveCameraLocation(this, WorldCameraRotation);
 
 }
 
@@ -46,7 +46,7 @@ void UPurpleprintCoreManagerComponent::TickEditorComponent(float DeltaTime)
 	return;
 #endif
 
-	WorldCameraLocation = UPurpleprintCoreMisc::GetActiveCameraLocation(this);
+	WorldCameraLocation = UPurpleprintCoreMisc::GetActiveCameraLocation(this, WorldCameraRotation);
 
 	if (!GetWorld()->IsPlayInEditor())
 	{

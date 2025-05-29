@@ -25,6 +25,7 @@ class PURPLEPRINTCOREEDITOR_API FPurpleprintCoreCameraTrackerEditor
 {
 
 public:
+	static FTransform GetLastCameraTransform();
 	static FVector GetLastCameraLocation();
 	static FRotator GetLastCameraRotation();
 	static void SetLastCameraLocation(const FVector& NewLocation);

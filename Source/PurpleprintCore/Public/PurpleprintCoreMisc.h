@@ -163,7 +163,7 @@ public:
 	}
 };
 
-DECLARE_DELEGATE_RetVal(FVector, FEditorCameraLocationDelegate);
+DECLARE_DELEGATE_RetVal(FTransform, FEditorCameraLocationDelegate);
 
 UCLASS()
 class PURPLEPRINTCORE_API UPurpleprintCoreMisc : public UBlueprintFunctionLibrary 
@@ -316,7 +316,7 @@ public:
 	static FTransform GetTransformArrayAlphaLerp(const TArray<FTransform>& Array, const float Alpha, const bool bLoop = false);
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Camera", meta = (WorldContext = "WorldContextObject"))
-	static FVector GetActiveCameraLocation(const UObject* WorldContextObject);
+	static FVector GetActiveCameraLocation(const UObject* WorldContextObject, FRotator& Rotation);
 
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Actor", meta = (DeterminesOutputType = "Actor"))
 	static AActor* SpawnActorClone(AActor* Actor, const FTransform& Transform);

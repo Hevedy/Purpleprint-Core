@@ -48,6 +48,7 @@ APurpleprintCoreManagerActor::APurpleprintCoreManagerActor(const class FObjectIn
 #endif
 
 	ManagerComp = ObjectInitializer.CreateDefaultSubobject<UPurpleprintCoreManagerComponent>(this, TEXT("ManagerComp0"));
+	ManagerComp->SetAutoActivate(true);
 }
 
 void APurpleprintCoreManagerActor::OnConstruction(const FTransform& Transform)

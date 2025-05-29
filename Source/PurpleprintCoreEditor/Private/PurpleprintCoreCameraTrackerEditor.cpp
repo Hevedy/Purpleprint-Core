@@ -20,6 +20,11 @@ PurpleprintCoreCameraTrackerEditor.cpp
 FVector FPurpleprintCoreCameraTrackerEditor::LastCameraLocation = FVector::ZeroVector;
 FRotator FPurpleprintCoreCameraTrackerEditor::LastCameraRotation = FRotator::ZeroRotator;
 
+FTransform FPurpleprintCoreCameraTrackerEditor::GetLastCameraTransform()
+{
+	return FTransform(LastCameraRotation, LastCameraLocation, FVector::OneVector);
+}
+
 FVector FPurpleprintCoreCameraTrackerEditor::GetLastCameraLocation()
 {
 	return LastCameraLocation;

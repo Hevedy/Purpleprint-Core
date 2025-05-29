@@ -25,7 +25,7 @@ PurpleprintCoreManagerComponent.h
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, EditInlineNew, hidecategories = (Object, Physics), meta = (BlueprintSpawnableComponent), ClassGroup = Rendering)
 class PURPLEPRINTCORE_API UPurpleprintCoreManagerComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -41,4 +41,5 @@ public:
 protected:
 
 	FVector WorldCameraLocation;
+	FRotator WorldCameraRotation;
 };

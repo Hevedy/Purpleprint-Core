@@ -29,7 +29,7 @@ TSharedPtr<FPurpleprintCoreCameraEditor> GCameraTracker;
 void FPurpleprintCoreEditor::StartupModule() 
 {
 #if WITH_EDITOR
-	UPurpleprintCoreMisc::EditorCameraLocationDelegate = FEditorCameraLocationDelegate::CreateStatic(&FPurpleprintCoreCameraTrackerEditor::GetLastCameraLocation);
+	UPurpleprintCoreMisc::EditorCameraLocationDelegate = FEditorCameraLocationDelegate::CreateStatic(&FPurpleprintCoreCameraTrackerEditor::GetLastCameraTransform);
 #endif
 	// This code will execute after your module is loaded into memory (but after global variables are initialized, of course.)
 	GCameraTracker = MakeShareable(new FPurpleprintCoreCameraEditor());

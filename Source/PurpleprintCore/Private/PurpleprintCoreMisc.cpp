@@ -373,7 +373,7 @@ FTransform UPurpleprintCoreMisc::GetTransformArrayAlphaLerp(const TArray<FTransf
 	return vF;
 }
 
-FVector UPurpleprintCoreMisc::GetActiveCameraLocation(const UObject* WorldContextObject)
+FVector UPurpleprintCoreMisc::GetActiveCameraLocation(const UObject* WorldContextObject, FRotator& Rotation)
 {
 	UWorld* world = GEngine->GetWorldFromContextObjectChecked(WorldContextObject);
 
@@ -387,6 +387,7 @@ FVector UPurpleprintCoreMisc::GetActiveCameraLocation(const UObject* WorldContex
 			FVector camLoc;
 			FRotator camRot;
 			pc->GetPlayerViewPoint(camLoc, camRot);
+			Rotation = camRot;
 			return camLoc;
 		}
 	}
@@ -394,7 +395,9 @@ FVector UPurpleprintCoreMisc::GetActiveCameraLocation(const UObject* WorldContex
 #if WITH_EDITOR
 	if (EditorCameraLocationDelegate.IsBound())
 	{
-		return EditorCameraLocationDelegate.Execute();
+		FTransform t = EditorCameraLocationDelegate.Execute();
+		Rotation = t.GetRotation().Rotator();
+		return t.GetLocation();
 	}
 #endif
 
