@@ -371,6 +371,8 @@ Utility functions for retrieving object names, build types, computer specificati
 
 ## Websites:
 - [Purpleprint Website][PurpleprintWeb]
+- [Purpleprint Documentation][PurpleprintWiki]
+- [Hevedy - Website][HevedyWeb]
 - [Hevedy - Twitter][HevedyTwitter]
 - [Hevedy - Github][HevedyGithub]
 - [Hevedy - Purpleprint Kit][PurpleprintKitGithub]
@@ -384,12 +386,12 @@ Utility functions for retrieving object names, build types, computer specificati
 By Hevedy <https://github.com/Hevedy>.
 
 
-[PurpleprintWeb]: http://hevedy.github.io/Purpleprint/
+[PurpleprintWeb]: https://www.hevedy.com/purpleprint/
+[PurpleprintWiki]: https://www.hevedy.com/wiki/
+[HevedyWeb]: https://www.hevedy.com/
 [HevedyTwitter]: https://twitter.com/Hevedy
 [HevedyGithub]: https://github.com/Hevedy
 [PurpleprintKitGithub]: https://github.com/Hevedy/PurpleprintKit
 [UE4Github]: https://github.com/EpicGames/UnrealEngine
 [UE4Website]: https://www.unrealengine.com/
-[UE4PostPK]: https://forums.unrealengine.com/showthread.php?92089-ASSETS-PLUGIN-FREE-Purpleprint-2-Kit-by-Hevedy
 [Trello]: https://trello.com/b/vx7Ydo7I/public-projects
-[Roboto]: http://www.google.com/fonts/specimen/Roboto
