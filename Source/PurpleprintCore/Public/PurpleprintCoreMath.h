@@ -85,34 +85,10 @@ public:
 	static float Reverse(const float Value);
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FVector MaxVec(FVector A, FVector B);
+	static FVector AddVectorIntegerVector(FVector A, FIntVector B);
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FVector MinVec(FVector A, FVector B);
-
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FVector ClampVec(FVector X, FVector Min, FVector Max);
-
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FIntVector MaxIVec(FIntVector A, FIntVector B);
-
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FIntVector MinIVec(FIntVector A, FIntVector B);
-
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FIntVector ClampIVec(FIntVector X, FIntVector Min, FIntVector Max);
-
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FVector AddVecIVec(FVector A, FIntVector B);
-
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FVector MultVecIVec(FVector A, FIntVector B);
-
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FIntVector VecToIVec(FVector X);
-
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
-	static FVector IVecToVec(FIntVector X);
+	static FVector MultVectorIntegerVector(FVector A, FIntVector B);
 
 	//#if UE_VERSION_NEWER_THAN(5, 2, 0)
 	//#endif

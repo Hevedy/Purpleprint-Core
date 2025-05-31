@@ -204,11 +204,26 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "Purpleprint|Vector" )
 	static FVector4 FloatSplitToVector4( const float FloatValue );
 
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+	static FVector MaxVector(FVector A, FVector B);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+	static FVector MinVector(FVector A, FVector B);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+	static FIntVector MaxIntegerVector(FIntVector A, FIntVector B);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+	static FIntVector MinIntegerVector(FIntVector A, FIntVector B);
+
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
 	static FVector2D ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max);
 
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
 	static FVector ClampVector(FVector Value, FVector Min, FVector Max);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+	static FIntVector ClampIntegerVector(FIntVector X, FIntVector Min, FIntVector Max);
 
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
 	static FVector4 ClampVector4(FVector4 Value, FVector4 Min, FVector4 Max);

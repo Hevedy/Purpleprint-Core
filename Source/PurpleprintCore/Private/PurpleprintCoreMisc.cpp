@@ -155,6 +155,26 @@ FVector4 UPurpleprintCoreMisc::FloatSplitToVector4( const float FloatValue )
 	return FVector4( FMath::TruncToInt( FloatValue ), FMath::Frac( FloatValue ), 0.0f, 0.0f );
 }
 
+FVector UPurpleprintCoreMisc::MaxVector(FVector A, FVector B)
+{
+	return FVector(FMath::Max(A.X, B.X), FMath::Max(A.Y, B.Y), FMath::Max(A.Z, B.Z));
+}
+
+FVector UPurpleprintCoreMisc::MinVector(FVector A, FVector B)
+{
+	return FVector(FMath::Min(A.X, B.X), FMath::Min(A.Y, B.Y), FMath::Min(A.Z, B.Z));
+}
+
+FIntVector UPurpleprintCoreMisc::MaxIntegerVector(FIntVector A, FIntVector B)
+{
+	return FIntVector(FMath::Max(A.X, B.X), FMath::Max(A.Y, B.Y), FMath::Max(A.Z, B.Z));
+}
+
+FIntVector UPurpleprintCoreMisc::MinIntegerVector(FIntVector A, FIntVector B)
+{
+	return FIntVector(FMath::Min(A.X, B.X), FMath::Min(A.Y, B.Y), FMath::Min(A.Z, B.Z));
+}
+
 FVector2D UPurpleprintCoreMisc::ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max) 
 {
 	FVector2D local;
@@ -170,6 +190,11 @@ FVector UPurpleprintCoreMisc::ClampVector(FVector Value, FVector Min, FVector Ma
 	local.Y = FMath::Clamp(Value.Y, Min.Y, Max.Y);
 	local.Z = FMath::Clamp(Value.Z, Min.Z, Max.Z);
 	return local;
+}
+
+FIntVector UPurpleprintCoreMisc::ClampIntegerVector(FIntVector X, FIntVector Min, FIntVector Max)
+{
+	return FIntVector(FMath::Clamp(X.X, Min.X, Max.X), FMath::Clamp(X.Y, Min.Y, Max.Y), FMath::Clamp(X.Z, Min.Z, Max.Z));
 }
 
 FVector4 UPurpleprintCoreMisc::ClampVector4(FVector4 Value, FVector4 Min, FVector4 Max) 
