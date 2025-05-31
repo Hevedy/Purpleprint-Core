@@ -41,9 +41,10 @@ enum class EPurpleCoreAlignAxis : uint8
 	eZ		UMETA(DisplayName = "Z+"),
 	eXN		UMETA(DisplayName = "X-"),
 	eYN		UMETA(DisplayName = "Y-"),
-	eZN		UMETA(DisplayName = "Z-")
+	eZN		UMETA(DisplayName = "Z-"),
+	eCustom UMETA(DisplayName = "Custom")
 };
-ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreAlignAxis, EPurpleCoreAlignAxis::eFree, EPurpleCoreAlignAxis::eZN);
+ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreAlignAxis, EPurpleCoreAlignAxis::eFree, EPurpleCoreAlignAxis::eCustom);
 
 UENUM(BlueprintType)
 enum class EPurpleCoreAxis : uint8 
@@ -53,7 +54,8 @@ enum class EPurpleCoreAxis : uint8
 	eZ		UMETA(DisplayName = "Z+"),
 	eXN		UMETA(DisplayName = "X-"),
 	eYN		UMETA(DisplayName = "Y-"),
-	eZN		UMETA(DisplayName = "Z-")
+	eZN		UMETA(DisplayName = "Z-"),
+	eCustom UMETA(DisplayName = "Custom")
 };
 ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreAxis, EPurpleCoreAxis::eX, EPurpleCoreAxis::eZN);
 
@@ -64,17 +66,17 @@ struct FPurpleTraceStruct
 
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction!=EPurpleCoreAxis::eCustom"))
 	FVector Origin = FVector::ZeroVector;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace")
-	float Length = 200.f;
+	float Length = 500.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace")
 	EPurpleCoreAxis Direction = EPurpleCoreAxis::eZN;
 
 	// Alternative vector manually set
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction!=EPurpleCoreAxis::eCustom"))
 	FVector DirectionVector = FVector(0.f, 0.f, -1.f);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace")
@@ -94,7 +96,7 @@ public:
 
 	FPurpleTraceStruct() {
 		Origin = FVector::ZeroVector;
-		Length = 200.f;
+		Length = 500.f;
 		Direction = EPurpleCoreAxis::eZN;
 		DirectionVector = FVector(0.f, 0.f, -1.f);
 		Channel = ETraceTypeQuery::TraceTypeQuery1;
@@ -112,45 +114,45 @@ struct FPurpleTraceAlignStruct
 
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction==EPurpleCoreAlignAxis::eCustom"))
 	FVector Origin = FVector::ZeroVector;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
-	float Length = 200.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
+	float Length = 500.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace")
 	EPurpleCoreAlignAxis Direction = EPurpleCoreAlignAxis::eFree;
 
 	// Alternative vector manually set
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction==EPurpleCoreAlignAxis::eCustom"))
 	FVector DirectionVector = FVector(0.f, 0.f, -1.f);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
 	TEnumAsByte<ETraceTypeQuery> Channel = ETraceTypeQuery::TraceTypeQuery1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
 	bool bComplex = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
 	bool bIgnoreSelf = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Actors", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Actors", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
 	TArray<AActor*> ActorsToIgnore;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Align", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Align", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
 	bool bAlignNormal = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Align", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Align", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
 	FVector AlignNormalMask = FVector(0.f, 0.f, 1.f);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug", meta = (EditCondition = "Direction != EPurpleCoreAlignAxis::eFree"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
 	bool bDebug = false;
 
 
 	FPurpleTraceAlignStruct() 
 	{
 		Origin = FVector::ZeroVector;
-		Length = 200.f;
+		Length = 500.f;
 		Direction = EPurpleCoreAlignAxis::eFree;
 		DirectionVector = FVector(0.f, 0.f, -1.f);
 		Channel = ETraceTypeQuery::TraceTypeQuery1;

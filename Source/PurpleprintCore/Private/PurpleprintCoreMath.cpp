@@ -101,6 +101,60 @@ float UPurpleprintCoreMath::Reverse(const float Value)
 	return b + (a / m);
 }
 
+FVector UPurpleprintCoreMath::MaxVec(FVector A, FVector B)
+{
+	return FVector(FMath::Max(A.X, B.X), FMath::Max(A.Y, B.Y), FMath::Max(A.Z, B.Z));
+}
+
+
+FVector UPurpleprintCoreMath::MinVec(FVector A, FVector B)
+{
+	return FVector(FMath::Min(A.X, B.X), FMath::Min(A.Y, B.Y), FMath::Min(A.Z, B.Z));
+}
+
+
+FVector UPurpleprintCoreMath::ClampVec(FVector X, FVector Min, FVector Max)
+{
+	return FVector(FMath::Clamp(X.X, Min.X, Max.X), FMath::Clamp(X.Y, Min.Y, Max.Y), FMath::Clamp(X.Z, Min.Z, Max.Z));
+}
+
+
+FIntVector UPurpleprintCoreMath::MaxIVec(FIntVector A, FIntVector B)
+{
+	return FIntVector(FMath::Max(A.X, B.X), FMath::Max(A.Y, B.Y), FMath::Max(A.Z, B.Z));
+}
+
+
+FIntVector UPurpleprintCoreMath::MinIVec(FIntVector A, FIntVector B)
+{
+	return FIntVector(FMath::Min(A.X, B.X), FMath::Min(A.Y, B.Y), FMath::Min(A.Z, B.Z));
+}
+
+FIntVector UPurpleprintCoreMath::ClampIVec(FIntVector X, FIntVector Min, FIntVector Max)
+{
+	return FIntVector(FMath::Clamp(X.X, Min.X, Max.X), FMath::Clamp(X.Y, Min.Y, Max.Y), FMath::Clamp(X.Z, Min.Z, Max.Z));
+}
+
+FVector UPurpleprintCoreMath::AddVecIVec(FVector A, FIntVector B)
+{
+	return FVector(A.X + B.X, A.Y + B.Y, A.Z + B.Z);
+}
+
+FVector UPurpleprintCoreMath::MultVecIVec(FVector A, FIntVector B)
+{
+	return FVector(A.X * B.X, A.Y * B.Y, A.Z * B.Z);
+}
+
+FIntVector UPurpleprintCoreMath::VecToIVec(FVector X)
+{
+	return FIntVector(X.X, X.Y, X.Z);
+}
+
+FVector UPurpleprintCoreMath::IVecToVec(FIntVector X)
+{
+	return FVector(X.X, X.Y, X.Z);
+}
+
 double UPurpleprintCoreMath::CalculateCameraHeightForArea(double DesiredWidthUU, float VerticalFOVDegrees)
 {
 	double HalfFOVRadians = FMath::DegreesToRadians(VerticalFOVDegrees / 2.0f);

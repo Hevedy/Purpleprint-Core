@@ -170,7 +170,7 @@ FVector2D UPurpleprintCoreRandom::GetRandomPointInCircleStream(FRandomStream con
 	return FVector2D(rX, rY);
 }
 
-FVector UPurpleprintCoreRandom::GetRandomPointInSphere(const float Radius, const bool bAlt, const FVector Location)
+FVector UPurpleprintCoreRandom::GetRandomPointInSphere(const float Radius, const FVector Location)
 {
 	float x, y, z;
 	float u = UPurpleprintCoreMath::Cbrt(FMath::FRand());
@@ -186,7 +186,7 @@ FVector UPurpleprintCoreRandom::GetRandomPointInSphere(const float Radius, const
 	return Location + FVector(x * Radius, y * Radius, z * Radius);
 }
 
-FVector UPurpleprintCoreRandom::GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius, const bool bAlt, const FVector Location)
+FVector UPurpleprintCoreRandom::GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius, const FVector Location)
 {
 	float x, y, z;
 	float u = UPurpleprintCoreMath::Cbrt(Stream.FRand());
@@ -202,7 +202,7 @@ FVector UPurpleprintCoreRandom::GetRandomPointInSphereStream(FRandomStream const
 	return Location + FVector(x * Radius, y * Radius, z * Radius);
 }
 
-FVector UPurpleprintCoreRandom::GetRandomPointInBoundingBoxStream(FRandomStream const& Stream, const FVector Origin, const FVector BoxExtent)
+FVector UPurpleprintCoreRandom::GetRandomPointInBoundingBoxStream(FRandomStream const& Stream, const FVector BoxExtent, const FVector Origin)
 {
 	const FVector boxMin = Origin - BoxExtent;
 	const FVector boxMax = Origin + BoxExtent;

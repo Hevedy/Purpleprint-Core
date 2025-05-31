@@ -78,11 +78,11 @@ public:
 	static FVector2D GetRandomPointInCircleStream(FRandomStream const& Stream, const float Radius = 100.f, const float InnerRadius = 0.0f);
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
-	static FVector GetRandomPointInSphere(const float Radius = 100.f, const bool bAlt = false, const FVector Location = FVector::ZeroVector);
+	static FVector GetRandomPointInSphere(const float Radius = 100.f, const FVector Location = FVector::ZeroVector);
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
-	static FVector GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius = 100.f, const bool bAlt = false, const FVector Location = FVector::ZeroVector);
+	static FVector GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius = 100.f, const FVector Location = FVector::ZeroVector);
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
-	static FVector GetRandomPointInBoundingBoxStream(FRandomStream const& Stream, const FVector Origin, const FVector BoxExtent);
+	static FVector GetRandomPointInBoundingBoxStream(FRandomStream const& Stream, const FVector BoxExtent, const FVector Origin = FVector::ZeroVector);
 };
