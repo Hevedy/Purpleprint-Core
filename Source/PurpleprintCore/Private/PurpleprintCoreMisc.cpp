@@ -43,9 +43,19 @@ PurpleprintCoreMisc.cpp
 // To be able to perform regex operatins on level stream info package name
 #if WITH_EDITOR
 #include "Runtime/Core/Public/Internationalization/Regex.h"
+
+// Needed for texture render
+#include "Misc/MessageDialog.h"
+#include "AssetToolsModule.h"
+#include "PackageTools.h"
+#include "Logging/MessageLog.h"
+#include "AssetRegistry/AssetRegistryModule.h"
+#include "Engine/TextureRenderTarget2D.h"
 #endif
 
 #include "DrawDebugHelpers.h"
+
+#define LOCTEXT_NAMESPACE "PurpleprintCoreMisc"
 
 FEditorCameraLocationDelegate UPurpleprintCoreMisc::EditorCameraLocationDelegate;
 
@@ -560,4 +570,145 @@ bool UPurpleprintCoreMisc::SetActorStaticMeshMaterials(AStaticMeshActor* Actor, 
 {
 	if (!Actor || Materials.Num() == 0) return false;
 	return SetPrimitiveComponentMaterials(Actor->GetStaticMeshComponent(), Materials);
+}
+
+// Kind of function replica from core given we cannot create non power of two
+UTexture2D* UPurpleprintCoreMisc::ConstructTexture2DNonPowerTwo(UTextureRenderTarget2D* RT, UObject* Outer, const FString& NewTexName, EObjectFlags InObjectFlags, uint32 Flags, TArray<uint8>* AlphaOverride)
+{
+	UTexture2D* Result = NULL;
+#if WITH_EDITOR
+	if (!RT)
+	{
+		return Result;
+	}
+	// Check render target size is valid
+	const bool bIsValidSize = (RT->SizeX != 0 && RT->SizeY != 0);
+	// The r2t resource will be needed to read its surface contents
+	FRenderTarget* RenderTarget = RT->GameThread_GetRenderTargetResource();
+
+	const EPixelFormat PixelFormat = RT->GetFormat();
+	ETextureSourceFormat TextureFormat = TSF_Invalid;
+	switch (PixelFormat)
+	{
+	case PF_B8G8R8A8:
+		TextureFormat = TSF_BGRA8;
+		break;
+	case PF_FloatRGBA:
+		TextureFormat = TSF_RGBA16F;
+		break;
+	case PF_G8:
+		TextureFormat = TSF_G8;
+		break;
+	default:
+	{
+		FText InvalidFormatMessage = NSLOCTEXT("TextureRenderTarget2D", "UnsupportedFormatRenderTarget2DWarning", "Unsupported format when creating Texture2D from TextureRenderTarget2D. Supported formats are B8G8R8A8, FloatRGBA and G8.");
+		FMessageDialog::Open(EAppMsgType::Ok, InvalidFormatMessage);
+	}
+	}
+
+	// exit if source is not compatible.
+	if (bIsValidSize == false || RenderTarget == NULL || TextureFormat == TSF_Invalid)
+	{
+		return Result;
+	}
+
+	// create the 2d texture
+	Result = NewObject<UTexture2D>(Outer, FName(*NewTexName), InObjectFlags);
+
+	RT->UpdateTexture2D(Result, TextureFormat, Flags, AlphaOverride);
+
+	// if render target gamma used was 1.0 then disable SRGB for the static texture
+	if (FMath::Abs(RenderTarget->GetDisplayGamma() - 1.0f) < KINDA_SMALL_NUMBER)
+	{
+		Flags &= ~CTF_SRGB;
+	}
+
+	Result->SRGB = (Flags & CTF_SRGB) != 0;
+	Result->MipGenSettings = TMGS_FromTextureGroup;
+
+	if ((Flags & CTF_AllowMips) == 0)
+	{
+		Result->MipGenSettings = TMGS_NoMipmaps;
+	}
+
+
+	if (Flags & CTF_Compress)
+	{
+		// Set compression options.
+		Result->DeferCompression = (Flags & CTF_DeferCompression) ? true : false;
+	}
+	else
+	{
+		// Disable compression
+		Result->CompressionNone = true;
+		Result->DeferCompression = false;
+	}
+	Result->PostEditChange();
+#endif
+	return Result;
+}
+
+
+UTexture2D* UPurpleprintCoreMisc::RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly(UTextureRenderTarget2D* RenderTarget, FString InName, enum TextureCompressionSettings CompressionSettings, enum TextureMipGenSettings MipSettings)
+{
+#if WITH_EDITOR
+	if (!RenderTarget)
+	{
+		FMessageLog("Blueprint").Warning(LOCTEXT("RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly_InvalidRenderTarget", "RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly: RenderTarget must be non-null."));
+		return nullptr;
+	}
+	else if (!RenderTarget->Resource)
+	{
+		FMessageLog("Blueprint").Warning(LOCTEXT("RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly_ReleasedRenderTarget", "RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly: RenderTarget has been released."));
+		return nullptr;
+	}
+	else
+	{
+		FString Name;
+		FString PackageName;
+		IAssetTools& AssetTools = FModuleManager::Get().LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+
+		//Use asset name only if directories are specified, otherwise full path
+		if (!InName.Contains(TEXT("/")))
+		{
+			FString AssetName = RenderTarget->GetOutermost()->GetName();
+			const FString SanitizedBasePackageName = UPackageTools::SanitizePackageName(AssetName);
+			const FString PackagePath = FPackageName::GetLongPackagePath(SanitizedBasePackageName) + TEXT("/");
+			AssetTools.CreateUniqueAssetName(PackagePath, InName, PackageName, Name);
+		}
+		else
+		{
+			InName.RemoveFromStart(TEXT("/"));
+			InName.RemoveFromStart(TEXT("Content/"));
+			InName.StartsWith(TEXT("Game/")) == true ? InName.InsertAt(0, TEXT("/")) : InName.InsertAt(0, TEXT("/Game/"));
+			AssetTools.CreateUniqueAssetName(InName, TEXT(""), PackageName, Name);
+		}
+
+		UObject* NewObj = nullptr;
+
+		// create a static 2d texture
+		NewObj = ConstructTexture2DNonPowerTwo(RenderTarget, CreatePackage(*PackageName), Name, RenderTarget->GetMaskedFlags() | RF_Public | RF_Standalone, CTF_Default | CTF_AllowMips, NULL);
+		UTexture2D* NewTex = Cast<UTexture2D>(NewObj);
+
+		if (NewTex != nullptr)
+		{
+			// package needs saving
+			NewObj->MarkPackageDirty();
+
+			// Notify the asset registry
+			FAssetRegistryModule::AssetCreated(NewObj);
+
+			// Update Compression and Mip settings
+			NewTex->CompressionSettings = CompressionSettings;
+			NewTex->MipGenSettings = MipSettings;
+			NewTex->PostEditChange();
+
+			return NewTex;
+		}
+		FMessageLog("Blueprint").Warning(LOCTEXT("RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly_FailedToCreateTexture", "RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly: Failed to create a new texture."));
+	}
+#else
+	FMessageLog("Blueprint").Error(LOCTEXT("Texture2D's cannot be created at runtime.", "RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly: Can't create Texture2D at run time. "));
+#endif
+	return nullptr;
 }

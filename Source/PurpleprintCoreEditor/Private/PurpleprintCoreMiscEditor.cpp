@@ -18,6 +18,7 @@ PurpleprintCoreMiscEditor.cpp
 #include "PurpleprintCoreMiscEditor.h"
 #include "PurpleprintCoreCameraTrackerEditor.h"
 
+#define LOCTEXT_NAMESPACE "PurpleprintCoreMiscEditor"
 
 UPurpleprintCoreMiscEditor::UPurpleprintCoreMiscEditor( const class FObjectInitializer& ObjectInitializer ) 
 {
@@ -47,3 +48,5 @@ FRotator UPurpleprintCoreMiscEditor::GetEditorActiveCameraRotation()
 #endif
 	return FRotator::ZeroRotator;
 }
+
+#undef LOCTEXT_NAMESPACE

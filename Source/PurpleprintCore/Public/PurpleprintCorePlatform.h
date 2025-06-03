@@ -23,6 +23,71 @@ PurpleprintCorePlatform.h
 #include "GenericPlatform/GenericApplication.h"
 #include "PurpleprintCorePlatform.generated.h"
 
+UENUM(BlueprintType)
+enum class EPurplePowerOfTwo : uint8
+{
+	e1		UMETA(DisplayName = "1"),
+	e2		UMETA(DisplayName = "2"),
+	e4		UMETA(DisplayName = "4"),
+	e8		UMETA(DisplayName = "8"),
+	e16		UMETA(DisplayName = "16"),
+	e32		UMETA(DisplayName = "32"),
+	e64		UMETA(DisplayName = "64"),
+	e128	UMETA(DisplayName = "128"),
+	e256	UMETA(DisplayName = "256"),
+	e512	UMETA(DisplayName = "512"),
+	e1024	UMETA(DisplayName = "1024"),
+	e2048	UMETA(DisplayName = "2048"),
+	e4096	UMETA(DisplayName = "4096"),
+	e8192	UMETA(DisplayName = "8192")
+};
+ENUM_RANGE_BY_FIRST_AND_LAST(EPurplePowerOfTwo, EPurplePowerOfTwo::e1, EPurplePowerOfTwo::e8192);
+
+UENUM(BlueprintType)
+enum class EPurplePowerOfTwoCustom : uint8
+{
+	eCustom UMETA(DisplayName = "Custom"),
+	e1		UMETA(DisplayName = "1"),
+	e2		UMETA(DisplayName = "2"),
+	e4		UMETA(DisplayName = "4"),
+	e8		UMETA(DisplayName = "8"),
+	e16		UMETA(DisplayName = "16"),
+	e32		UMETA(DisplayName = "32"),
+	e64		UMETA(DisplayName = "64"),
+	e128	UMETA(DisplayName = "128"),
+	e256	UMETA(DisplayName = "256"),
+	e512	UMETA(DisplayName = "512"),
+	e1024	UMETA(DisplayName = "1024"),
+	e2048	UMETA(DisplayName = "2048"),
+	e4096	UMETA(DisplayName = "4096"),
+	e8192	UMETA(DisplayName = "8192")
+};
+ENUM_RANGE_BY_FIRST_AND_LAST(EPurplePowerOfTwoCustom, EPurplePowerOfTwoCustom::eCustom, EPurplePowerOfTwoCustom::e8192);
+
+USTRUCT(BlueprintType)
+struct FPurplePowerOfTwoResolutionCustom
+{
+	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditAnywhere, Category = "Purpleprint", BlueprintReadWrite)
+	EPurplePowerOfTwoCustom Width;
+
+	UPROPERTY(EditAnywhere, Category = "Purpleprint", BlueprintReadWrite)
+	EPurplePowerOfTwoCustom Height;
+
+	UPROPERTY(EditAnywhere, Category = "Purpleprint", BlueprintReadWrite)
+	FIntPoint Custom = FIntPoint(ForceInitToZero);
+
+	FPurplePowerOfTwoResolutionCustom(EPurplePowerOfTwoCustom Width = EPurplePowerOfTwoCustom::e1024, 
+										EPurplePowerOfTwoCustom Height = EPurplePowerOfTwoCustom::e1024, 
+										FIntPoint Custom = FIntPoint(1024,1024))
+		: Width(Width)
+		, Height(Height)
+		, Custom(Custom) {}
+};
+
 USTRUCT(BlueprintType)
 struct FPurpleDisplayInfo
 {

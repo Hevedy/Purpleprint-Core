@@ -369,4 +369,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Actor")
 	static bool SetActorStaticMeshMaterials(AStaticMeshActor* Actor, TArray<UMaterialInterface*> Materials);
 
+	static UTexture2D* ConstructTexture2DNonPowerTwo(UTextureRenderTarget2D* RT, UObject* InOuter, const FString& NewTexName, EObjectFlags InObjectFlags, uint32 Flags = CTF_Default, TArray<uint8>* AlphaOverride = NULL);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Render Target Create Static Texture Non Power Of Two Editor Only", Keywords = "Create Static Texture from Render Target", UnsafeDuringActorConstruction = "true"), Category = Game)
+	static UTexture2D* RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly(UTextureRenderTarget2D* RenderTarget, FString Name = "Texture", enum TextureCompressionSettings CompressionSettings = TC_Default, enum TextureMipGenSettings MipSettings = TMGS_FromTextureGroup);
 };
