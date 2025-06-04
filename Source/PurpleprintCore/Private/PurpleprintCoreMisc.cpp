@@ -712,3 +712,5 @@ UTexture2D* UPurpleprintCoreMisc::RenderTargetCreateStaticTexture2DNonPowerTwoEd
 #endif
 	return nullptr;
 }
+
+#undef LOCTEXT_NAMESPACE

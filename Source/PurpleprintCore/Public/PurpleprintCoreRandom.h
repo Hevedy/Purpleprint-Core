@@ -34,55 +34,71 @@ protected:
 
 public:
 
-	// Returns a pseudo - random integer index based on weights.
-	UFUNCTION( BlueprintPure, meta = ( DisplayName = "Random Index Based In Weights" ), Category = "Purpleprint|Random" )
-	static int32 GetRandomIndexByWeight( const TArray<float> Weights);
+	// Returns a pseudo-random integer index based on weights.
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Index Based In Weights"), Category = "Purpleprint|Random")
+	static int32 GetRandomIndexByWeight(const TArray<float> Weights);
 
+	// Returns a pseudo-random integer index based on weights using a random stream.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Index Based In Weights"), Category = "Purpleprint|Random")
 	static int32 GetRandomIndexByWeightStream(FRandomStream const& Stream, const TArray<float> Weights);
 
+	// Returns a random FVector between Min and Max.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Vector (Single Call)"), Category = "Purpleprint|Random")
 	static FVector RandomVector(FVector Min, FVector Max);
 
+	// Returns a random FVector between Min and Max using a random stream.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Vector Stream (Single Call)"), Category = "Purpleprint|Random")
 	static FVector RandomVectorStream(FRandomStream const& Stream, FVector Min, FVector Max);
 
+	// Returns a random FVector within a bounding box.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Vector Box (Single Call)"), Category = "Purpleprint|Random")
 	static FVector RandomVectorBox(FBox Range);
 
+	// Returns a random FVector within a bounding box using a random stream.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Vector Box Stream (Single Call)"), Category = "Purpleprint|Random")
 	static FVector RandomVectorBoxStream(FRandomStream const& Stream, FBox Range);
 
+	// Returns a random FRotator within a bounding box.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Rotator Box (Single Call)"), Category = "Purpleprint|Random")
 	static FRotator RandomRotatorBox(FBox Range);
 
+	// Returns a random FRotator within a bounding box using a random stream.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Rotator Box Stream (Single Call)"), Category = "Purpleprint|Random")
 	static FRotator RandomRotatorBoxStream(FRandomStream const& Stream, FBox Range);
 
+	// Returns a random integer within an integer range.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Int Range"), Category = "Purpleprint|Random")
 	static int32 RandomRange(FInt32Range Range);
 
+	// Returns a random integer within an integer range using a random stream.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Int Range Stream"), Category = "Purpleprint|Random")
 	static int32 RandomRangeStream(FRandomStream const& Stream, FInt32Range Range);
 
+	// Returns a random float within a float range.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Float Range"), Category = "Purpleprint|Random")
 	static float RandomFloatRange(FFloatRange Range);
 
+	// Returns a random float within a float range using a random stream.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Float Range Stream"), Category = "Purpleprint|Random")
 	static float RandomFloatRangeStream(FRandomStream const& Stream, FFloatRange Range);
 
+	// Returns a random point within a circle.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
 	static FVector2D GetRandomPointInCircle(const float Radius = 100.f, const float InnerRadius = 0.0f);
 
+	// Returns a random point within a circle using a random stream.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
 	static FVector2D GetRandomPointInCircleStream(FRandomStream const& Stream, const float Radius = 100.f, const float InnerRadius = 0.0f);
 
+	// Returns a random point within a sphere.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
 	static FVector GetRandomPointInSphere(const float Radius = 100.f, const FVector Location = FVector::ZeroVector);
 
+	// Returns a random point within a sphere using a random stream.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
 	static FVector GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius = 100.f, const FVector Location = FVector::ZeroVector);
 
+	// Returns a random point within a bounding box using a random stream.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
 	static FVector GetRandomPointInBoundingBoxStream(FRandomStream const& Stream, const FVector BoxExtent, const FVector Origin = FVector::ZeroVector);
 };

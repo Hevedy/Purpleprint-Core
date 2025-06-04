@@ -37,12 +37,15 @@ protected:
 
 public:
 
+	// Returns the full transform (location, rotation, scale) of the currently active editor camera.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Editor|Camera", meta = (DevelopmentOnly))
 	static FTransform GetEditorActiveCameraTransform();
 
+	// Returns the world location (vector) of the currently active editor camera.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Editor|Camera", meta = (DevelopmentOnly))
 	static FVector GetEditorActiveCameraLocation();
 
+	// Returns the rotation (pitch, yaw, roll) of the currently active editor camera.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Editor|Camera", meta = (DevelopmentOnly))
 	static FRotator GetEditorActiveCameraRotation();
 

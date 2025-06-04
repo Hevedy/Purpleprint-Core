@@ -139,93 +139,120 @@ protected:
 
 public:
 	
+	// Returns the full name of a UObject.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Editor")
 	static FString GetObjectFullName(UObject* Object);
 
+	// Returns the name of a soft object reference.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Editor")
 	static FString GetSoftObjectName(TSoftObjectPtr<UObject> InObject);
 
+	// Returns the name of the persistent level.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Editor", meta = (WorldContext = "WorldContextObject"))
 	static FName GetPersistentLevelName(class UObject* WorldContextObject);
 
+	// Returns the stream level name from an actor.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Editor")
 	static FName GetStreamLevelNameFromActor(AActor* Actor);
 
+	// Returns the stream level name from a world reference.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Editor")
 	static FName GetStreamLevelNameFromReference(const TSoftObjectPtr<UWorld> World);
 
+	// Extracts a valid asset name from a string.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Editor")
 	static FName GetCorrectAssetName(const FString String);
 
+	// Returns true if the build is an editor build.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Version", meta = (BlueprintThreadSafe))
 	static bool IsEditorBuild();
 
+	// Returns true if the build is a debug build.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Version", meta = (BlueprintThreadSafe))
 	static bool IsDebugBuild();
 
+	// Returns true if the build is a development build.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Version", meta = (BlueprintThreadSafe))
 	static bool IsDevelopmentBuild();
 
+	// Returns true if the build is a shipping build.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Version", meta = (BlueprintThreadSafe))
 	static bool IsShippingBuild();
 
-	//Returns the primary monitor resolution.
+	// Returns the resolution of the primary monitor.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static void GetPrimaryMonitorResolution(int32& Width, int32& Height);
 
+	// Returns information about all connected monitors.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static TArray<FPurpleDisplayInfo> GetMonitorsInfo();
 
+	// Returns the number of connected monitors.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static int32 GetMonitorsNum();
 
+	// Returns information about the primary monitor.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static FPurpleDisplayInfo GetPrimaryMonitorInfo();
 
+	// Returns the index of the primary monitor.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static int32 GetPrimaryMonitorIndex();
 
+	// Returns the name of the primary monitor.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static FString GetPrimaryMonitorName();
 
+	// Returns true if the specified index is the primary monitor.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static bool IsIndexPrimaryMonitor(const int32 Index);
 
+	// Returns monitor info by index.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static FPurpleDisplayInfo GetMonitorInfoByIndex(const int32 Index);
 
+	// Returns the monitor name for a given index.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Monitor", Meta = (Keywords = "screen size desktop"))
 	static FString GetMonitorName(const int32 Index);
 
-	// FIntPoint not exposed to Blueprints sadly
+	// Returns a list of supported fullscreen resolutions by monitor index. (not exposed to Blueprints FIntPoint)
 	static bool GetSupportedFullscreenResolutionsByIndex(TArray<FIntPoint>& Resolutions, const int32 Index);
 
+	// Converts a DateTime to a Unix timestamp (int32).
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|Date")
 	static int32 DateTimeToUnixTimeStamp(const FDateTime& DateTime);
 
+	// Converts a DateTime to a Unix timestamp (int64).
 	static int64 DateTimeToUnixTimeStamp64(const FDateTime& DateTime);
 
-	UFUNCTION(BlueprintPure, meta = (Keywords = "CPU brand"), Category = "Purpleprint|Platform") //Set your category
+	// Returns the CPU brand name.
+	UFUNCTION(BlueprintPure, meta = (Keywords = "CPU brand"), Category = "Purpleprint|Platform")
 	static FString GetCPUBrandName();
 
+	// Returns the CPU vendor name.
 	UFUNCTION(BlueprintPure, meta = (Keywords = "CPU vendor"), Category = "Purpleprint|Platform")
 	static FString GetCPUVendorName();
 
+	// Returns the number of CPU cores.
 	UFUNCTION(BlueprintPure, meta = (Keywords = "CPU cores"), Category = "Purpleprint|Platform")
 	static int32 GetCPUCores();
 
-	UFUNCTION(BlueprintPure, meta = ( Keywords = "GPU brand"), Category = "Purpleprint|Platform")
+	// Returns the GPU brand name.
+	UFUNCTION(BlueprintPure, meta = (Keywords = "GPU brand"), Category = "Purpleprint|Platform")
 	static FString GetGPUBrandName();
 
+	// Returns GPU driver information.
 	UFUNCTION(BlueprintPure, meta = (Keywords = "GPU driver"), Category = "Purpleprint|Platform")
 	static FString GetGPUDriverInfo();
 
+	// Returns the OS version.
 	UFUNCTION(BlueprintPure, meta = (Keywords = "OS version"), Category = "Purpleprint|Platform")
 	static FString GetOSVersion();
 
+	// Returns a string representation of the network role.
 	UFUNCTION(BlueprintPure, meta = (Keywords = "net role"), Category = "Purpleprint|Networking")
 	static FString GetNetRoleString(const ENetRole Role);
 
-	// Undefined for Blueprints so cannot be exposed
+	// Returns a string representation of the network mode (not exposed to Blueprints ENetMode).
 	static FString GetNetModeString(const ENetMode Mode);
 };

@@ -19,7 +19,7 @@ PurpleprintUserWidget.cpp
 #include "Internationalization/Text.h"
 #include "SubtitleManager.h"
 
-#define LOCTEXT_NAMESPACE "Game.UI"
+#define LOCTEXT_NAMESPACE "PurpleprintUserWidget"
 
 
 UPurpleprintUserWidget::UPurpleprintUserWidget(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
