@@ -204,29 +204,37 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "Purpleprint|Vector" )
 	static FVector4 FloatSplitToVector4( const float FloatValue );
 
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
-	static FVector MaxVector(FVector A, FVector B);
+    // Returns a vector with the maximum component for each dimension from the pair of vectors.
+    UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+    static FVector MaxVector(FVector A, FVector B);
 
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
-	static FVector MinVector(FVector A, FVector B);
+    // Returns a vector with the minimum component for each dimension from the pair of vectors.
+    UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+    static FVector MinVector(FVector A, FVector B);
 
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
-	static FIntVector MaxIntegerVector(FIntVector A, FIntVector B);
+    // Returns an integer vector with the maximum component for each dimension from the pair of integer vectors.
+    UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+    static FIntVector MaxIntegerVector(FIntVector A, FIntVector B);
 
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
-	static FIntVector MinIntegerVector(FIntVector A, FIntVector B);
+    // Returns an integer vector with the minimum component for each dimension from the pair of integer vectors.
+    UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+    static FIntVector MinIntegerVector(FIntVector A, FIntVector B);
 
-	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
-	static FVector2D ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max);
+    // Clamps each component of a 2D vector between the corresponding components of Min and Max.
+    UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
+    static FVector2D ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max);
 
-	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
-	static FVector ClampVector(FVector Value, FVector Min, FVector Max);
+    // Clamps each component of a 3D vector between the corresponding components of Min and Max.
+    UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
+    static FVector ClampVector(FVector Value, FVector Min, FVector Max);
 
-	UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
-	static FIntVector ClampIntegerVector(FIntVector X, FIntVector Min, FIntVector Max);
+    // Clamps each component of an integer vector between the corresponding components of Min and Max.
+    UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
+    static FIntVector ClampIntegerVector(FIntVector X, FIntVector Min, FIntVector Max);
 
-	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
-	static FVector4 ClampVector4(FVector4 Value, FVector4 Min, FVector4 Max);
+    // Clamps each component of a 4D vector between the corresponding components of Min and Max.
+    UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
+    static FVector4 ClampVector4(FVector4 Value, FVector4 Min, FVector4 Max);
 
 	/** Returns FVector2D(A,B) from the FVector(A,B,C) */
 	UFUNCTION( BlueprintCallable, Category = "Purpleprint|Vector" )
@@ -332,9 +340,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Array")
 	static FTransform GetTransformArrayAlphaLerp(const TArray<FTransform>& Array, const float Alpha, const bool bLoop = false);
 
+	// Get actice camera in editor and game location and rotation
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Camera", meta = (WorldContext = "WorldContextObject"))
 	static FVector GetActiveCameraLocation(const UObject* WorldContextObject, FRotator& Rotation);
 
+	// Spawn an actor clone with the same properties as the original actor
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Actor", meta = (DeterminesOutputType = "Actor"))
 	static AActor* SpawnActorClone(AActor* Actor, const FTransform& Transform);
 

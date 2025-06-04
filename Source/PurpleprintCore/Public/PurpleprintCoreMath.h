@@ -35,119 +35,152 @@ protected:
 
 public:
 
+	// Returns the square root of a value
 	static FORCEINLINE float Log2(float Value) { return FMath::Loge(Value) * 1.4426950f; }
+
 	// Slower than Log2 but more accurate
 	static FORCEINLINE float Log2S(float Value) { return FMath::LogX(2.f, Value); }
+
 	// 1.0 / Loge(10)= 0.4342944f
 	static FORCEINLINE float Log10(float Value) { return FMath::Loge(Value) * 0.4342944f; }
 
+	// More accurate version of Log10
 	static FORCEINLINE double Log10S(float Value) { return (double)(FMath::Loge(Value) * (1.0 / FMath::Loge(10.f))); }
 
+	// Converts degrees to radians using constant PI
 	static FORCEINLINE float Deg2Rad() { return (float)(PI * 2.f) / 360.f; }
 
+	// Fixed constant value for degree to radian conversion
 	static FORCEINLINE float Deg2RadFixed() { return 0.017453f; }
 
-	// Missing from C++ lib so here are, the Degress operations
-	static inline float SinD(const float A );
-	static inline float AsinD(const float A );
-	static inline float CosD(const float A );
-	static inline float AcosD(const float A );
-	static inline float TanD(const float A );
-	static inline float AtanD(const float A );
-	static inline float Atan2D(const float A, const float B );
+	// Missing from C++ lib so here are the Degrees operations
+	static inline float SinD(const float A);
+	static inline float AsinD(const float A);
+	static inline float CosD(const float A);
+	static inline float AcosD(const float A);
+	static inline float TanD(const float A);
+	static inline float AtanD(const float A);
+	static inline float Atan2D(const float A, const float B);
 
+	// Returns Log base 10 using fast approximation
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float Log10Fast(const float Value) { return Log10(Value); };
 
+	// Returns Log base 10 using more accurate version
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float Log10Slow(const float Value) { return Log10S(Value); };
 
-	/** Returns cube root */
-	UFUNCTION( BlueprintPure, Category = "Purpleprint|Math|Utils" )
-	static float Cbrt( const float Value );
+	// Returns cube root
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
+	static float Cbrt(const float Value);
 
+	// Clamps value to range -1 to 1
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float OneLimit(const float Value);
 
+	// Returns 1 minus the given value
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float OneMinus(const float Value);
 
+	// Negates an integer
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static int32 NegateInt(const int32 Value);
 
+	// Negates a float
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float Negate(const float Value);
 
+	// Returns the negative of the absolute integer value
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static int32 ReverseInt(const int32 Value);
 
+	// Returns the negative of the absolute float value
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float Reverse(const float Value);
 
+	// Adds FVector and FIntVector
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static FVector AddVectorIntegerVector(FVector A, FIntVector B);
 
+	// Multiplies FVector and FIntVector
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static FVector MultVectorIntegerVector(FVector A, FIntVector B);
 
-	//#if UE_VERSION_NEWER_THAN(5, 2, 0)
-	//#endif
-	// Cannot set a check for newer versions here, UFUNCTION isn't supported inside #if verison check
+	// Calculates optimal camera height for a given area width and vertical FOV
 	static double CalculateCameraHeightForArea(double DesiredWidthUU, float VerticalFOVDegrees);
 
+	// Calculates camera height using float precision
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float CalculateCameraHeightForAreaFloat(float DesiredWidthUU, float VerticalFOVDegrees);
 
+	// Adds two transforms with optional masking for location/rotation/scale
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
 	static FTransform TransformsAddMasked(const FTransform& A, const FTransform& B, bool bLocation = true, bool bRotation = true, bool bScale = false, bool bReturnFirst = true);
 
+	// Subtracts two transforms with optional masking
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
 	static FTransform TransformsSubMasked(const FTransform& A, const FTransform& B, bool bLocation = true, bool bRotation = true, bool bScale = false, bool bReturnFirst = true);
 
+	// Multiplies two transforms with optional masking
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
 	static FTransform TransformsMulMasked(const FTransform& A, const FTransform& B, bool bLocation = true, bool bRotation = true, bool bScale = false, bool bbReturnFirst = true);
 
+	// Combines two transforms (A * B) and add location of B to A's location
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
 	static FTransform TransformsCombine(const FTransform& A, const FTransform& B);
 
+	// Gets closest point on sphere surface to target
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math")
 	static FVector GetClosestPointOnSphereSurface(const FVector& SphereCenter, float SphereRadius, const FVector& TargetPoint);
 
+	// Gets closest point on dome surface to target
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math")
 	static FVector GetClosestPointOnDomeSurface(const FVector& DomeCenter, float DomeRadius, const FVector& TargetPoint);
 
+	// Simulates spring physics for a float value
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math")
 	static float SpringFloat(float Current, float Target, float& Velocity, float Frequency, float Damping, float DeltaTime);
 
+	// Compares two linear colors with optional alpha check
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Math|Color")
 	static bool FLinearColorNearEqual(const FLinearColor A, const FLinearColor B, const bool bIgnoreAlpha = true);
 
+	// Calculates perimeter of a box given size
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float BoxPerimeter(const float SizeX, const float SizeY);
 
+	// Calculates diagonal of a box
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float BoxDiagonal(const float SizeX, const float SizeY);
 
+	// Gets one side length from diagonal (assuming square box)
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float BoxSide(const float Diagonal);
 
+	// Gets distance between two vectors
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float VectorDistance(const FVector A, const FVector B);
 
+	// Gets 2D distance between two points
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float Distance2D(const FVector2D A, const FVector2D B);
 
+	// Gets angle (in radians) between two vectors
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float GetVectorsAngleRadiants(FVector A, FVector B);
 
+	// Gets angle (in degrees) between two vectors
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static float GetVectorsAngleDegrees(FVector A, FVector B);
 
+	// Gets a point on line at specified distance from start
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
 	static FVector GetPointOnLineAtDistance(FVector Start, FVector End, float Distance);
 
+	// Applies linear bounce effect to a lerp alpha
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Lerp")
 	static float LerpLinearBounce(float Alpha);
+
 
 	// Make callable because will return only once
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Math|Lerp")
