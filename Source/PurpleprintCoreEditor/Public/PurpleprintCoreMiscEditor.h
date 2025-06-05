@@ -24,6 +24,7 @@ PurpleprintCoreMiscEditor.h
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "PurpleprintCoreMiscEditor.generated.h"
 
+class UStaticMesh;
 
 UCLASS()
 class PURPLEPRINTCOREEDITOR_API UPurpleprintCoreMiscEditor : public UBlueprintFunctionLibrary 
@@ -48,5 +49,8 @@ public:
 	// Returns the rotation (pitch, yaw, roll) of the currently active editor camera.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Editor|Camera", meta = (DevelopmentOnly))
 	static FRotator GetEditorActiveCameraRotation();
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Editor|StaticMesh", meta = (DevelopmentOnly))
+	static void SetMinimumLODForPlatforms(UStaticMesh* StaticMesh, const TMap<FName, int32>& PlatformMinimumLODs);
 
 };

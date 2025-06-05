@@ -18,6 +18,8 @@ PurpleprintCoreMiscEditor.cpp
 #include "PurpleprintCoreMiscEditor.h"
 #include "PurpleprintCoreCameraTrackerEditor.h"
 
+#include "Engine/StaticMesh.h"
+
 #define LOCTEXT_NAMESPACE "PurpleprintCoreMiscEditor"
 
 UPurpleprintCoreMiscEditor::UPurpleprintCoreMiscEditor( const class FObjectInitializer& ObjectInitializer ) 
@@ -47,6 +49,20 @@ FRotator UPurpleprintCoreMiscEditor::GetEditorActiveCameraRotation()
 	return FPurpleprintCoreCameraTrackerEditor::GetLastCameraRotation();
 #endif
 	return FRotator::ZeroRotator;
+}
+
+void UPurpleprintCoreMiscEditor::SetMinimumLODForPlatforms(UStaticMesh* StaticMesh, const TMap<FName, int32>& PlatformMinimumLODs)
+{
+	if(StaticMesh == nullptr || PlatformMinimumLODs.Num() == 0)
+	{
+		return;
+	}
+
+	for (const TPair<FName, int32>& pMinimumLOD : PlatformMinimumLODs)
+	{
+		FPerPlatformInt pLOD = FPerPlatformInt(pMinimumLOD.Value);
+		StaticMesh->SetMinLOD(pLOD);
+	}
 }
 
 #undef LOCTEXT_NAMESPACE
