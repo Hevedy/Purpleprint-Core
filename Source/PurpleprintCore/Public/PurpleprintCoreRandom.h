@@ -39,8 +39,17 @@ public:
 	static int32 GetRandomIndexByWeight(const TArray<float> Weights);
 
 	// Returns a pseudo-random integer index based on weights using a random stream.
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Index Based In Weights"), Category = "Purpleprint|Random")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Index Based In Weights Stream"), Category = "Purpleprint|Random")
 	static int32 GetRandomIndexByWeightStream(FRandomStream const& Stream, const TArray<float> Weights);
+
+	// Returns a pseudo-random integer index based on weights. Don't checks for empty arrays.
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Index Based In Weights Unsafe"), Category = "Purpleprint|Random")
+	static int32 GetRandomIndexByWeightUnsafe(const TArray<float> Weights);
+
+	// Returns a pseudo-random integer index based on weights using a random stream. Don't checks for empty arrays.
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Index Based In Weights Stream Unsafe"), Category = "Purpleprint|Random")
+	static int32 GetRandomIndexByWeightUnsafeStream(FRandomStream const& Stream, const TArray<float> Weights);
+
 
 	// Returns a random FVector between Min and Max.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Vector (Single Call)"), Category = "Purpleprint|Random")

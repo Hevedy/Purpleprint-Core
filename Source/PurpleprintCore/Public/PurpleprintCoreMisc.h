@@ -220,6 +220,14 @@ public:
     UFUNCTION(BlueprintPure, Category = "Purpleprint|Vector")
     static FIntVector MinIntegerVector(FIntVector A, FIntVector B);
 
+	// Clamps a range of integers between the specified minimum and maximum values.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Range")
+	static FInt32Range ClampIntRange(const FInt32Range& Range, const int32 Min, const int32 Max);
+
+	// Clamps a range of float between the specified minimum and maximum values.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Range")
+	static FFloatRange ClampFloatRange(const FFloatRange& Range, const float Min, const float Max);
+
     // Clamps each component of a 2D vector between the corresponding components of Min and Max.
     UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")
     static FVector2D ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max);
@@ -381,6 +389,9 @@ public:
 
 	static UTexture2D* ConstructTexture2DNonPowerTwo(UTextureRenderTarget2D* RT, UObject* InOuter, const FString& NewTexName, EObjectFlags InObjectFlags, uint32 Flags = CTF_Default, TArray<uint8>* AlphaOverride = NULL);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Render Target Create Static Texture Non Power Of Two Editor Only", Keywords = "Create Static Texture from Render Target", UnsafeDuringActorConstruction = "true"), Category = Game)
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Texture", meta = (DisplayName = "Render Target Create Static Texture Non Power Of Two Editor Only", Keywords = "Create Static Texture from Render Target", UnsafeDuringActorConstruction = "true", DevelopmentOnly))
 	static UTexture2D* RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly(UTextureRenderTarget2D* RenderTarget, FString Name = "Texture", enum TextureCompressionSettings CompressionSettings = TC_Default, enum TextureMipGenSettings MipSettings = TMGS_FromTextureGroup);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Actor", meta = (UnsafeDuringActorConstruction = "true", DevelopmentOnly))
+	static TArray<FTransform> SnapActorsToSimulatedTransform(TArray<AActor*> Actors);
 };

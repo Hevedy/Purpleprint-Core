@@ -31,24 +31,22 @@ int32 UPurpleprintCoreRandom::GetRandomIndexByWeight(const TArray<float> Weights
 
 	if (maxIndex < 0) { return -1; }
 
-	TArray<float> weights = Weights;
-
 	float tValue = 0; // Total value
 	float rValue = 0; // Random value
 
 	// Ground truth solution for correct percents
-	for (int32 i = 0; i < weights.Num(); i++)
+	for (int32 i = 0; i < Weights.Num(); i++)
 	{
-		tValue += weights[i];
+		tValue += Weights[i];
 	}
 	rValue = FMath::RandRange(0.0f, tValue);
-	for (int32 i = 0; i < weights.Num(); i++)
+	for (int32 i = 0; i < Weights.Num(); i++)
 	{
-		if (rValue < weights[i])
+		if (rValue < Weights[i])
 		{
 			return i;
 		}
-		rValue -= weights[i];
+		rValue -= Weights[i];
 	}
 	return 0; //Never reach point
 }
@@ -59,23 +57,64 @@ int32 UPurpleprintCoreRandom::GetRandomIndexByWeightStream(FRandomStream const& 
 
 	if (maxIndex < 0) { return -1; }
 
-	TArray<float> weights = Weights;
-
 	float tValue = 0; // Total value
 	float rValue = 0; // Random value
 
-	for (int32 i = 0; i < weights.Num(); i++)
+	for (int32 i = 0; i < Weights.Num(); i++)
 	{
-		tValue += weights[i];
+		tValue += Weights[i];
 	}
 	rValue = Stream.FRandRange(0.0f, tValue);
-	for (int32 i = 0; i < weights.Num(); i++)
+	for (int32 i = 0; i < Weights.Num(); i++)
 	{
-		if (rValue < weights[i])
+		if (rValue < Weights[i])
 		{
 			return i;
 		}
-		rValue -= weights[i];
+		rValue -= Weights[i];
+	}
+	return 0; //Never reach point
+}
+
+int32 UPurpleprintCoreRandom::GetRandomIndexByWeightUnsafe(const TArray<float> Weights)
+{
+	float tValue = 0; // Total value
+	float rValue = 0; // Random value
+
+	// Ground truth solution for correct percents
+	for (int32 i = 0; i < Weights.Num(); i++)
+	{
+		tValue += Weights[i];
+	}
+	rValue = FMath::RandRange(0.0f, tValue);
+	for (int32 i = 0; i < Weights.Num(); i++)
+	{
+		if (rValue < Weights[i])
+		{
+			return i;
+		}
+		rValue -= Weights[i];
+	}
+	return 0; //Never reach point
+}
+
+int32 UPurpleprintCoreRandom::GetRandomIndexByWeightUnsafeStream(FRandomStream const& Stream, const TArray<float> Weights)
+{
+	float tValue = 0; // Total value
+	float rValue = 0; // Random value
+
+	for (int32 i = 0; i < Weights.Num(); i++)
+	{
+		tValue += Weights[i];
+	}
+	rValue = Stream.FRandRange(0.0f, tValue);
+	for (int32 i = 0; i < Weights.Num(); i++)
+	{
+		if (rValue < Weights[i])
+		{
+			return i;
+		}
+		rValue -= Weights[i];
 	}
 	return 0; //Never reach point
 }

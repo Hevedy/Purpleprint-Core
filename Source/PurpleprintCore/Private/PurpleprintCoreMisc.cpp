@@ -44,6 +44,9 @@ PurpleprintCoreMisc.cpp
 #if WITH_EDITOR
 #include "Runtime/Core/Public/Internationalization/Regex.h"
 
+#include "EditorSupportDelegates.h"
+//#include "Editor/UnrealEd/Public/EditorUtilities.h"
+
 // Needed for texture render
 #include "Misc/MessageDialog.h"
 #include "AssetToolsModule.h"
@@ -183,6 +186,22 @@ FIntVector UPurpleprintCoreMisc::MaxIntegerVector(FIntVector A, FIntVector B)
 FIntVector UPurpleprintCoreMisc::MinIntegerVector(FIntVector A, FIntVector B)
 {
 	return FIntVector(FMath::Min(A.X, B.X), FMath::Min(A.Y, B.Y), FMath::Min(A.Z, B.Z));
+}
+
+FInt32Range UPurpleprintCoreMisc::ClampIntRange(const FInt32Range& Range, const int32 Min, const int32 Max)
+{
+	FInt32Range lRange;
+	lRange.SetLowerBoundValue(FMath::Clamp(Range.GetLowerBoundValue(), Min, Max));
+	lRange.SetUpperBoundValue(FMath::Clamp(Range.GetUpperBoundValue(), Min, Max));
+	return lRange;
+}
+
+FFloatRange UPurpleprintCoreMisc::ClampFloatRange(const FFloatRange& Range, const float Min, const float Max)
+{
+	FFloatRange lRange;
+	lRange.SetLowerBoundValue(FMath::Clamp(Range.GetLowerBoundValue(), Min, Max));
+	lRange.SetUpperBoundValue(FMath::Clamp(Range.GetUpperBoundValue(), Min, Max));
+	return lRange;
 }
 
 FVector2D UPurpleprintCoreMisc::ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max) 
@@ -711,6 +730,32 @@ UTexture2D* UPurpleprintCoreMisc::RenderTargetCreateStaticTexture2DNonPowerTwoEd
 	FMessageLog("Blueprint").Error(LOCTEXT("Texture2D's cannot be created at runtime.", "RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly: Can't create Texture2D at run time. "));
 #endif
 	return nullptr;
+}
+
+TArray<FTransform> UPurpleprintCoreMisc::SnapActorsToSimulatedTransform(TArray<AActor*> Actors)
+{
+#if WITH_EDITOR
+	if (Actors.Num() == 0) return TArray<FTransform>();
+
+	TArray<FTransform> transforms;
+
+	for( auto actor : Actors)
+	{
+		// Get transform
+		FTransform simulatedTransform = actor->GetActorTransform();
+		transforms.Add(simulatedTransform);
+		// Apply simulation transform
+		actor->Modify(); // For editor undo/redo support
+		actor->SetActorTransform(simulatedTransform, false, nullptr, ETeleportType::TeleportPhysics);
+	}
+	// Mask as dirty so the level is saved with the new transforms
+	FEditorScriptExecutionGuard scriptGuard;
+	FEditorSupportDelegates::RedrawAllViewports.Broadcast();
+
+	return transforms;
+#else
+	return TArray<FTransform>();
+#endif
 }
 
 #undef LOCTEXT_NAMESPACE
