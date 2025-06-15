@@ -47,7 +47,7 @@ More: [Documentation](https://www.hevedy.com/wiki/purpleprint/core/api/purplepri
 
 ### 🎲 Random Library:
 New nodes for generating random points in space with fewer function calls.  
-Examples: ```GetRandomIndexByWeight( const TArray<float>), RandomVectorBox(FBox), RandomFloatRange(FFloatRange), GetRandomPointInBoundingBoxStream(FRandomStream const&, const FVector, const FVector)...```  
+Examples: ```GetRandomIndexByWeight(const TArray<float>), RandomVectorBox(FBox), RandomFloatRange(FFloatRange), GetRandomPointInBoundingBoxStream(FRandomStream const&, const FVector, const FVector)...```  
 More: [Documentation](https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-random.html)
 
 ### 🧰 Misc Library:
