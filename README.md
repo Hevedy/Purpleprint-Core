@@ -42,23 +42,23 @@ A modified cable component that simulates in local space, useful when you need a
 
 ### 🧮 Math Library:
 A set of utility functions that are either missing or not exposed in the engine, designed to speed up workflow.  
-Examples: ```Log2(float Value), Log10(float Value), CalculateCameraHeightForArea(double DesiredWidthUU, float VerticalFOVDegrees), TransformsCombine(const FTransform& A, const FTransform& B), IntegerCount(const int32 IntValue, const bool Fast), DecimalCount(const float FloatValue)...```  
-More: (Documentation)[https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-math.html]
+Examples: ```Log2(float), Log10(float), CalculateCameraHeightForArea(double, float), TransformsCombine(const FTransform&, const FTransform&), IntegerCount(const int32, const bool), DecimalCount(const float)...```  
+More: [Documentation](https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-math.html)
 
 ### 🎲 Random Library:
 New nodes for generating random points in space with fewer function calls.  
-Examples: ```GetRandomIndexByWeight( const TArray<float> Weights), GetRandomIndexByWeightStream(FRandomStream const& Stream, const TArray<float> Weights), RandomVectorBox(FBox Range), RandomFloatRange(FFloatRange Range), GetRandomPointInBoundingBoxStream(FRandomStream const& Stream, const FVector Origin, const FVector BoxExtent)...```  
-More: (Documentation)[https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-random.html]
+Examples: ```GetRandomIndexByWeight( const TArray<float>), RandomVectorBox(FBox), RandomFloatRange(FFloatRange), GetRandomPointInBoundingBoxStream(FRandomStream const&, const FVector, const FVector)...```  
+More: [Documentation](https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-random.html)
 
 ### 🧰 Misc Library:
 A collection of utility functions for cloning actors, calculating directions, splitting vectors, and other helpful operations.  
-Examples: ```ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max), GetFloatArrayAlpha(const TArray<float>& Array, const float Alpha), GetActiveCameraLocation(const UObject* WorldContextObject), SpawnActorClone(AActor* Actor, const FTransform& Transform)...```  
-More: (Documentation)[https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-misc.html]
+Examples: ```ClampVector2D(FVector2D, FVector2D, FVector2D), GetFloatArrayAlpha(const TArray<float>&, const float), GetActiveCameraLocation(const UObject*), SpawnActorClone(AActor*, const FTransform&)...```  
+More: [Documentation](https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-misc.html)
 
 ### 🖥️ Platform Library:  
 Utility functions for retrieving object names, build types, computer specifications, and monitor information.  
-Examples: ```IsEditorBuild(), IsShippingBuild(), GetPrimaryMonitorResolution(int32& Width, int32& Height), GetCPUCores()...```
-More: (Documentation)[https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-platform.html]
+Examples: ```IsEditorBuild(), IsShippingBuild(), GetPrimaryMonitorResolution(int32&, int32&), GetCPUCores()...```
+More: [Documentation](https://www.hevedy.com/wiki/purpleprint/core/api/purpleprint-core-platform.html)
 
 ## 🌐 Useful Links:
 - [Purpleprint Website][PurpleprintWeb]
