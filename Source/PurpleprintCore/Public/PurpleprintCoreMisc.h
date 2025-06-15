@@ -62,7 +62,7 @@ ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreAxis, EPurpleCoreAxis::eX, EPurpleCoreAx
 USTRUCT(BlueprintType)
 struct FPurpleTraceStruct 
 {
-	GENERATED_USTRUCT_BODY()
+	GENERATED_BODY()
 
 public:
 
@@ -110,7 +110,7 @@ public:
 USTRUCT(BlueprintType)
 struct FPurpleTraceAlignStruct 
 {
-	GENERATED_USTRUCT_BODY()
+	GENERATED_BODY()
 
 public:
 
