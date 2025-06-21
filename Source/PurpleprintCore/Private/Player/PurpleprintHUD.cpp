@@ -64,7 +64,11 @@ void APurpleprintHUD::SetControlMode(bool bInGame) {
 			InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockInFullscreen);
 			if (Widget) 
 			{
-				if (Widget->bIsFocusable) 
+#if ENGINE_MAJOR_VERSION >= 5
+				if (Widget->IsFocusable()) 
+#else
+				if (Widget->bIsFocusable)
+#endif
 				{
 					InputMode.SetWidgetToFocus(Widget->TakeWidget());
 				}
@@ -79,7 +83,11 @@ void APurpleprintHUD::SetControlMode(bool bInGame) {
 			InputMode.SetHideCursorDuringCapture(bInGame); // If mixed only
 			if (Widget) 
 			{
-				if (Widget->bIsFocusable) 
+#if ENGINE_MAJOR_VERSION >= 5
+				if (Widget->IsFocusable())
+#else
+				if (Widget->bIsFocusable)
+#endif
 				{
 					InputMode.SetWidgetToFocus(Widget->TakeWidget());
 				}

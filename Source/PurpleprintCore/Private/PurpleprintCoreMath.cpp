@@ -23,41 +23,6 @@ UPurpleprintCoreMath::UPurpleprintCoreMath( const class FObjectInitializer& Obje
 
 }
 
-float UPurpleprintCoreMath::SinD(const float A ) 
-{
-	return FMath::Sin( PI / ( 180.f ) * A );
-}
-
-float UPurpleprintCoreMath::AsinD(const float A ) 
-{
-	return ( 180.f ) / PI * FMath::Asin( A );
-}
-
-float UPurpleprintCoreMath::CosD(const float A ) 
-{
-	return FMath::Cos( PI / ( 180.f ) * A );
-}
-
-float UPurpleprintCoreMath::AcosD(const float A ) 
-{
-	return ( 180.f ) / PI * FMath::Acos( A );
-}
-
-float UPurpleprintCoreMath::TanD(const float A ) 
-{
-	return FMath::Tan( PI / ( 180.f ) * A );
-}
-
-float UPurpleprintCoreMath::AtanD(const float A ) 
-{
-	return ( 180.f ) / PI * FMath::Atan( A );
-}
-
-float UPurpleprintCoreMath::Atan2D(const float A, float B ) 
-{
-	return ( 180.f ) / PI * FMath::Atan2( A, B );
-}
-
 float UPurpleprintCoreMath::Cbrt( const float Value ) 
 {
 	return FMath::Pow( Value, 1.f / 3.f );
