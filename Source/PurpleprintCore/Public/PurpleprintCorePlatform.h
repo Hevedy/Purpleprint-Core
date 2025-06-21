@@ -267,4 +267,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Platform|Editor")
 	static bool SaveObject(UObject* Object, bool bPrompt = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Platform|IO")
+	static FDateTime GetFileModificationTime(const FString& FilePath);
 };

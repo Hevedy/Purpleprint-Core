@@ -416,3 +416,16 @@ bool UPurpleprintCorePlatform::SaveObject(UObject* Object, bool bPrompt)
 	return false;
 #endif // WITH_EDITORONLY_DATA
 }
+
+FDateTime UPurpleprintCorePlatform::GetFileModificationTime(const FString& FilePath)
+{
+	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+
+	if (!PlatformFile.FileExists(*FilePath))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("File not found: %s"), *FilePath);
+		return FDateTime(); // Time by default
+	}
+
+	return PlatformFile.GetTimeStamp(*FilePath);
+}
