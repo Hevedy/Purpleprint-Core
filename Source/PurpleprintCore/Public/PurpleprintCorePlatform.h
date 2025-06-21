@@ -255,4 +255,16 @@ public:
 
 	// Returns a string representation of the network mode (not exposed to Blueprints ENetMode).
 	static FString GetNetModeString(const ENetMode Mode);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Platform|Editor")
+	static bool SavePackages(TArray<UPackage*> Packages, bool bPrompt = true);
+	
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Platform|Editor")
+	static bool SaveObjects(TArray<UObject*> Objects, bool bPrompt = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Platform|Editor")
+	static bool SavePackage(UPackage* Package, bool bPrompt = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Platform|Editor")
+	static bool SaveObject(UObject* Object, bool bPrompt = true);
 };

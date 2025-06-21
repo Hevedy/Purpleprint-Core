@@ -25,6 +25,13 @@ PurpleprintCorePlatform.cpp
 #include "Interfaces/NetworkPredictionInterface.h"
 #include "Net/OnlineEngineInterface.h"
 
+#if WITH_EDITORONLY_DATA
+#include "AssetRegistry/AssetRegistryModule.h"
+#include "Editor.h"
+#include "PackageTools.h"
+#include "FileHelpers.h"
+#endif // WITH_EDITORONLY_DATA
+
 
 UPurpleprintCorePlatform::UPurpleprintCorePlatform(const class FObjectInitializer& ObjectInitializer) 
 {
@@ -320,4 +327,92 @@ FString UPurpleprintCorePlatform::GetNetModeString(const ENetMode Mode)
 	default:
 		return "Unknow";
 	}
+}
+
+bool UPurpleprintCorePlatform::SavePackages(TArray<UPackage*> Packages, bool bPrompt)
+{
+#if WITH_EDITORONLY_DATA
+	for(UPackage* Package : Packages)
+	{
+		if (Package && Package->IsValidLowLevel() && !Package->IsPendingKill())
+		{
+			if (Package->IsDirty())
+			{
+				FEditorFileUtils::PromptForCheckoutAndSave({ Package }, false, bPrompt);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Package %s is not dirty, no need to save."), *Package->GetName());
+			}
+		}
+	}
+	return true;
+#else
+	return false;
+#endif // WITH_EDITORONLY_DATA
+}
+
+bool UPurpleprintCorePlatform::SaveObjects(TArray<UObject*> Objects, bool bPrompt)
+{
+#if WITH_EDITORONLY_DATA
+	for (UObject* Object : Objects)
+	{
+		if (Object && Object->IsValidLowLevel() && !Object->IsPendingKill())
+		{
+			UPackage* package = Object->GetOutermost();
+			if (package && package->IsDirty())
+			{
+				FEditorFileUtils::PromptForCheckoutAndSave({ package }, false, bPrompt);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Package %s is not dirty, no need to save."), *package->GetName());
+			}
+		}
+	}
+	return true;
+#else
+	return false;
+#endif // WITH_EDITORONLY_DATA
+}
+
+bool UPurpleprintCorePlatform::SavePackage(UPackage* Package, bool bPrompt)
+{
+#if WITH_EDITORONLY_DATA
+	if (Package)
+	{
+		if (Package->IsValidLowLevel() && !Package->IsPendingKill())
+		{
+			if (Package->IsDirty())
+			{
+				//FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+				//AssetRegistryModule.Get().AssetModified(Package);
+				FEditorFileUtils::PromptForCheckoutAndSave({ Package }, false, bPrompt);
+				//FEditorFileUtils::SaveDirtyPackages(false, true, true, false, false, false);
+				return true;
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Package %s is not dirty, no need to save."), *Package->GetName());
+			}
+		}
+	}
+	return false;
+#else
+	return false;
+#endif // WITH_EDITORONLY_DATA
+}
+
+bool UPurpleprintCorePlatform::SaveObject(UObject* Object, bool bPrompt)
+{
+#if WITH_EDITORONLY_DATA
+	if (Object && Object->IsValidLowLevel() && !Object->IsPendingKill())
+	{
+		UPackage* package = Object->GetOutermost();
+		return SavePackage(package, bPrompt);
+	}
+	return false;
+#else
+	return false;
+#endif // WITH_EDITORONLY_DATA
 }
