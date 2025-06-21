@@ -49,12 +49,33 @@ APurpleprintCoreManagerActor::APurpleprintCoreManagerActor(const class FObjectIn
 
 	ManagerComp = ObjectInitializer.CreateDefaultSubobject<UPurpleprintCoreManagerComponent>(this, TEXT("ManagerComp0"));
 	ManagerComp->SetAutoActivate(true);
+
+	if (ManagerComp)
+	{
+		ManagerComp->SetDebug(bDebug);
+		ManagerComp->SetTickActorsInGame(bTickActorsInGame);
+		ManagerComp->SetTickActorsInEditor(bTickActorsInEditor);
+		ManagerComp->SetFixedTickActorsInEditor(bFixedTickActorsInEditor);
+		ManagerComp->SetVirtualEditorTickIntervalInEditor(VirtualEditorTickIntervalInEditor);
+	}
 }
 
 void APurpleprintCoreManagerActor::OnConstruction(const FTransform& Transform)
 {
+	FVector scaled = GetActorScale3D();
+	SetActorScale3D(FVector::OneVector);
+
 	//Super::OnConstruction(Transform);
 	RegisterAllComponents();
+
+	if (ManagerComp)
+	{
+		ManagerComp->SetDebug(bDebug);
+		ManagerComp->SetTickActorsInGame(bTickActorsInGame);
+		ManagerComp->SetTickActorsInEditor(bTickActorsInEditor);
+		ManagerComp->SetFixedTickActorsInEditor(bFixedTickActorsInEditor);
+		ManagerComp->SetVirtualEditorTickIntervalInEditor(VirtualEditorTickIntervalInEditor);
+	}
 }
 
 /** Allow actors to initialize themselves on the C++ side after all of their components have been initialized, only called during gameplay */
@@ -62,6 +83,16 @@ void APurpleprintCoreManagerActor::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 }
+
+#if WITH_EDITORONLY_DATA
+void APurpleprintCoreManagerActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+
+	FName propertyName = (PropertyChangedEvent.Property != nullptr) ? PropertyChangedEvent.Property->GetFName() : NAME_None;
+
+}
+#endif // WITH_EDITORONLY_DATA
 
 // Called when the game starts or when spawned
 void APurpleprintCoreManagerActor::BeginPlay()
@@ -104,23 +135,25 @@ void APurpleprintCoreManagerActor::TickEditor(float DeltaTime)
 	{
 		if (ManagerComp)
 		{
-			ManagerComp->TickEditorComponent(DeltaTime);
+			ManagerComp->VirtualTickEditorComponent(DeltaTime);
 		}
 		// Enable editor tick
 	}
 }
 
-//
-// Utility
-//
-void APurpleprintCoreManagerActor::GenerateRandomSeed()
+APurpleprintCoreManagerActor* APurpleprintCoreManagerActor::FindPurpleprintCoreManager(UObject* WorldContext)
 {
-	int32 rI = FMath::RandRange(0, 99999);
-	SetSeed(rI);
-}
+	UWorld* world = GEngine->GetWorldFromContextObjectChecked(WorldContext);
 
-void APurpleprintCoreManagerActor::SetSeed(int32 Seed)
-{
-	RandomSeed = Seed;
-	RandomStream.Initialize(Seed);
+	if (!world) return nullptr;
+
+	TArray<AActor*> FoundManagers;
+	UGameplayStatics::GetAllActorsOfClass(world, APurpleprintCoreManagerActor::StaticClass(), FoundManagers);
+
+	if (FoundManagers.Num() > 0)
+	{
+		return Cast<APurpleprintCoreManagerActor>(FoundManagers[0]);
+	}
+
+	return nullptr;
 }

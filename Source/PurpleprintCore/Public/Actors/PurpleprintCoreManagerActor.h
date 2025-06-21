@@ -59,33 +59,39 @@ public:
 
 	/** Allow actors to initialize themselves on the C++ side after all of their components have been initialized, only called during gameplay */
 	virtual void PostInitializeComponents() override;
+
+#if WITH_EDITORONLY_DATA
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif // WITH_EDITOR
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Random")
-	int32 RandomSeed = 0;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Random")
-	FRandomStream RandomStream;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
 	bool bDebug = false;
 
-	//
-	// Utility
-	//
-	UFUNCTION(BlueprintCallable, Category = "Random")
-	virtual void SetSeed(int32 Seed);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tick")
+	bool bTickActorsInGame = false;
 
-	UFUNCTION(BlueprintCallable, Category = "Random")
-	virtual void GenerateRandomSeed();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tick")
+	bool bTickActorsInEditor = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tick")
+	bool bFixedTickActorsInEditor = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tick")
+	float VirtualEditorTickIntervalInEditor = 1.0f;
 
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void TickEditor(float DeltaTime);
+
+	virtual UPurpleprintCoreManagerComponent* GetManager() { return ManagerComp; };
+
+	UFUNCTION(BlueprintCallable, Category = "Manager", meta = (WorldContext = "WorldContextObject"))
+	static APurpleprintCoreManagerActor* FindPurpleprintCoreManager(UObject* WorldContext);
 
 private:
 

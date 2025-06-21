@@ -4,9 +4,9 @@ The assets will be released at FAB and Itch, in combo of the other modules and p
 
 ## 📌 Project Details:
 Project Name: Purpleprint - Core   
-Current Version: 1.0.5.0  
+Current Version: 1.1.1  
 Author: Hevedy <https://github.com/Hevedy>  
-Ready to work with Unreal Engine 4.27 & 5.4+  
+Ready to work with Unreal Engine 4.27 & 5.2+  
 
 
 
