@@ -31,24 +31,30 @@ FTransform UPurpleprintCoreMiscEditor::GetEditorActiveCameraTransform()
 {
 #if WITH_EDITOR
 	return FPurpleprintCoreCameraTrackerEditor::GetLastCameraTransform();
-#endif
+#else
+	// Return a default transform if not in editor mode
+	// This is useful to avoid crashes when this function is called outside of the editor context.
+	// You can modify this default transform as needed.
 	return FTransform();
+#endif
 }
 
 FVector UPurpleprintCoreMiscEditor::GetEditorActiveCameraLocation()
 {
 #if WITH_EDITOR
 	return FPurpleprintCoreCameraTrackerEditor::GetLastCameraLocation();
-#endif
+#else
 	return FVector::ZeroVector;
+#endif
 }
 
 FRotator UPurpleprintCoreMiscEditor::GetEditorActiveCameraRotation()
 {
 #if WITH_EDITOR
 	return FPurpleprintCoreCameraTrackerEditor::GetLastCameraRotation();
-#endif
+#else
 	return FRotator::ZeroRotator;
+#endif
 }
 
 void UPurpleprintCoreMiscEditor::SetMinimumLODForPlatforms(UStaticMesh* StaticMesh, const TMap<FName, int32>& PlatformMinimumLODs)

@@ -634,7 +634,13 @@ UTexture2D* UPurpleprintCoreMisc::ConstructTexture2DNonPowerTwo(UTextureRenderTa
 	// create the 2d texture
 	Result = NewObject<UTexture2D>(Outer, FName(*NewTexName), InObjectFlags);
 
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 6
 	RT->UpdateTexture2D(Result, TextureFormat, Flags, AlphaOverride);
+	//RT->UpdateTexture(Result, Flags, AlphaOverride);
+	//UpdateTexture(UTexture * InTexture, EConstructTextureFlags InFlags = CTF_Default, const TArray<uint8>*InAlphaOverride = nullptr, FOnTextureChangingDelegate InOnTextureChangingDelegate = OnTextureChangingDefault, FText * OutErrorMessage = nullptr);
+#else
+	RT->UpdateTexture2D(Result, TextureFormat, Flags, AlphaOverride);
+#endif
 
 	// if render target gamma used was 1.0 then disable SRGB for the static texture
 	if (FMath::Abs(RenderTarget->GetDisplayGamma() - 1.0f) < KINDA_SMALL_NUMBER)
@@ -676,7 +682,11 @@ UTexture2D* UPurpleprintCoreMisc::RenderTargetCreateStaticTexture2DNonPowerTwoEd
 		FMessageLog("Blueprint").Warning(LOCTEXT("RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly_InvalidRenderTarget", "RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly: RenderTarget must be non-null."));
 		return nullptr;
 	}
+#if ENGINE_MAJOR_VERSION >= 5
+	else if (!RenderTarget->GameThread_GetRenderTargetResource())
+#else
 	else if (!RenderTarget->Resource)
+#endif
 	{
 		FMessageLog("Blueprint").Warning(LOCTEXT("RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly_ReleasedRenderTarget", "RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly: RenderTarget has been released."));
 		return nullptr;

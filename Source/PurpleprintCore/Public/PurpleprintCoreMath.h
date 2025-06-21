@@ -54,13 +54,13 @@ public:
 	static FORCEINLINE float Deg2RadFixed() { return 0.017453f; }
 
 	// Missing from C++ lib so here are the Degrees operations
-	static inline float SinD(const float A);
-	static inline float AsinD(const float A);
-	static inline float CosD(const float A);
-	static inline float AcosD(const float A);
-	static inline float TanD(const float A);
-	static inline float AtanD(const float A);
-	static inline float Atan2D(const float A, const float B);
+	static inline float SinD(const float A) { return FMath::Sin(PI / (180.f) * A); }
+	static inline float AsinD(const float A) { return (180.f) / PI * FMath::Asin(A); }
+	static inline float CosD(const float A) { return FMath::Cos(PI / (180.f) * A); }
+	static inline float AcosD(const float A) { return (180.f) / PI * FMath::Acos(A); }
+	static inline float TanD(const float A) { return FMath::Tan(PI / (180.f) * A); }
+	static inline float AtanD(const float A) { return (180.f) / PI * FMath::Atan(A); }
+	static inline float Atan2D(const float A, const float B) { return (180.f) / PI * FMath::Atan2(A, B); }
 
 	// Returns Log base 10 using fast approximation
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Utils")
