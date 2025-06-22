@@ -67,6 +67,18 @@ UPurpleprintCoreMisc::UPurpleprintCoreMisc( const class FObjectInitializer& Obje
 
 }
 
+bool UPurpleprintCoreMisc::AreTransformArraysEqual(const TArray<FTransform>& A, const TArray<FTransform>& B)
+{
+	if (A.Num() != B.Num())
+		return false;
+	for (int32 i = 0; i < A.Num(); ++i)
+	{
+		if (!A[i].Equals(B[i]))
+			return false;
+	}
+	return true;
+}
+
 EPurpleCoreAxis UPurpleprintCoreMisc::PurpleCoreAlignAxisToAxis(EPurpleCoreAlignAxis Align)
 {
 	switch (Align)

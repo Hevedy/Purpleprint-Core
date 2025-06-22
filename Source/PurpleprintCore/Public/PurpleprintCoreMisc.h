@@ -105,6 +105,19 @@ public:
 		ActorsToIgnore = TArray<AActor*>();
 		bDebug = false;
 	}
+
+	bool operator==(const FPurpleTraceStruct& Other) const
+	{
+		return Origin.Equals(Other.Origin) &&
+			FMath::IsNearlyEqual(Length, Other.Length) &&
+			Direction == Other.Direction &&
+			DirectionVector.Equals(Other.DirectionVector) &&
+			Channel == Other.Channel &&
+			bComplex == Other.bComplex &&
+			bIgnoreSelf == Other.bIgnoreSelf &&
+			ActorsToIgnore == Other.ActorsToIgnore &&
+			bDebug == Other.bDebug;
+	}
 };
 
 USTRUCT(BlueprintType)
@@ -163,6 +176,21 @@ public:
 		AlignNormalMask = FVector(0.f, 0.f, 1.f);
 		bDebug = false;
 	}
+
+	bool operator==(const FPurpleTraceAlignStruct& Other) const
+	{
+		return Origin.Equals(Other.Origin) &&
+			FMath::IsNearlyEqual(Length, Other.Length) &&
+			Direction == Other.Direction &&
+			DirectionVector.Equals(Other.DirectionVector) &&
+			Channel == Other.Channel &&
+			bComplex == Other.bComplex &&
+			bIgnoreSelf == Other.bIgnoreSelf &&
+			ActorsToIgnore == Other.ActorsToIgnore &&
+			bAlignNormal == Other.bAlignNormal &&
+			AlignNormalMask.Equals(Other.AlignNormalMask) &&
+			bDebug == Other.bDebug;
+	}
 };
 
 DECLARE_DELEGATE_RetVal(FTransform, FEditorCameraLocationDelegate);
@@ -179,6 +207,9 @@ protected:
 
 public:
 	static FEditorCameraLocationDelegate EditorCameraLocationDelegate;
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Utils")
+	static bool AreTransformArraysEqual(const TArray<FTransform>& A, const TArray<FTransform>& B);
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Utils")
 	static EPurpleCoreAxis PurpleCoreAlignAxisToAxis(EPurpleCoreAlignAxis Align);

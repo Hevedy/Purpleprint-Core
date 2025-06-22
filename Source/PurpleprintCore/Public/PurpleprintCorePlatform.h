@@ -268,6 +268,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Platform|Editor")
 	static bool SaveObject(UObject* Object, bool bPrompt = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Platform|IO")
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|IO")
 	static FDateTime GetFileModificationTime(const FString& FilePath);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|IO")
+	static int64 GetFileSize(const FString& FilePath);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|IO")
+	static FString GetFileMD5(const FString& FilePath);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Platform|IO")
+	static bool CompareMD5Hashes(const FString& FilePathA, const FString& FilePathB);
 };

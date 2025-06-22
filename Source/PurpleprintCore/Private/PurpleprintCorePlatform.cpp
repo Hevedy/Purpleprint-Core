@@ -419,13 +419,72 @@ bool UPurpleprintCorePlatform::SaveObject(UObject* Object, bool bPrompt)
 
 FDateTime UPurpleprintCorePlatform::GetFileModificationTime(const FString& FilePath)
 {
-	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+	IPlatformFile& platformFile = FPlatformFileManager::Get().GetPlatformFile();
 
-	if (!PlatformFile.FileExists(*FilePath))
+	if (!platformFile.FileExists(*FilePath))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("File not found: %s"), *FilePath);
 		return FDateTime(); // Time by default
 	}
 
-	return PlatformFile.GetTimeStamp(*FilePath);
+	return platformFile.GetTimeStamp(*FilePath);
+}
+
+int64 UPurpleprintCorePlatform::GetFileSize(const FString& FilePath)
+{
+	IPlatformFile& platformFile = FPlatformFileManager::Get().GetPlatformFile();
+
+	if (!platformFile.FileExists(*FilePath))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("File not found: %s"), *FilePath);
+		return -1; // Invalid size
+	}
+
+	return platformFile.FileSize(*FilePath);
+}
+
+FString UPurpleprintCorePlatform::GetFileMD5(const FString& FilePath)
+{
+	IPlatformFile& platformFile = FPlatformFileManager::Get().GetPlatformFile();
+	if (!platformFile.FileExists(*FilePath))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("File does not exist: %s"), *FilePath);
+		return FString();
+	}
+
+	TArray<uint8> fileData;
+	if (!FFileHelper::LoadFileToArray(fileData, *FilePath))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Unable to read the file: %s"), *FilePath);
+		return FString();
+	}
+
+	FMD5 md5;
+	md5.Update(fileData.GetData(), fileData.Num());
+
+	uint8 digest[16];
+	md5.Final(digest);
+
+	return BytesToHex(digest, 16);
+}
+
+bool UPurpleprintCorePlatform::CompareMD5Hashes(const FString& FilePathA, const FString& FilePathB)
+{
+	FString hash1 = GetFileMD5(FilePathA);
+	FString hash2 = GetFileMD5(FilePathB);
+
+	if (hash1.IsEmpty() || hash2.IsEmpty())
+	{
+		UE_LOG(LogTemp, Error, TEXT("Unable to get file hashes from one or both files."));
+		return false;
+	}
+
+	if (hash1 == hash2)
+	{
+		return true; // Hashes are equal
+	}
+	else
+	{
+		return false; // Hashes are not equal
+	}
 }
