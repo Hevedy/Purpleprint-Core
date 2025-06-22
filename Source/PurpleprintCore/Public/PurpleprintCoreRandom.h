@@ -101,13 +101,34 @@ public:
 
 	// Returns a random point within a sphere.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
-	static FVector GetRandomPointInSphere(const float Radius = 100.f, const FVector Location = FVector::ZeroVector);
+	static FVector GetRandomPointInSphere(const float Radius = 100.f, const FVector Origin = FVector::ZeroVector);
 
 	// Returns a random point within a sphere using a random stream.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
-	static FVector GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius = 100.f, const FVector Location = FVector::ZeroVector);
+	static FVector GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius = 100.f, const FVector Origin = FVector::ZeroVector);
 
 	// Returns a random point within a bounding box using a random stream.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
 	static FVector GetRandomPointInBoundingBoxStream(FRandomStream const& Stream, const FVector BoxExtent, const FVector Origin = FVector::ZeroVector);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
+	static FVector2D GetRandomPointInBiasCircle(const float MinRadius = 0.f, const float MaxRadius = 1.f);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
+	static FVector GetRandomPointInBiasSphere(const float MinRadius = 0.f, const float MaxRadius = 1.0f, const FVector Origin = FVector::ZeroVector);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
+	static FVector GetRandomPointInBiasBoundingBox(const FVector MinExtent = FVector::ZeroVector, const FVector MaxExtent = FVector(1.0f, 1.0f, 1.0f),
+													const FVector Origin = FVector::ZeroVector);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
+	static FVector2D GetRandomPointInBiasCircleStream(FRandomStream const& Stream, const float MinRadius = 0.f, const float MaxRadius = 1.f);
+	
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
+	static FVector GetRandomPointInBiasSphereStream(FRandomStream const& Stream, const float MinRadius = 0.f, const float MaxRadius = 1.0f, 
+													const FVector Origin = FVector::ZeroVector);
+	
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
+	static FVector GetRandomPointInBiasBoundingBoxStream(FRandomStream const& Stream, const FVector MinExtent = FVector::ZeroVector, 
+															const FVector MaxExtent = FVector(1.0f, 1.0f, 1.0f), const FVector Origin = FVector::ZeroVector);
 };

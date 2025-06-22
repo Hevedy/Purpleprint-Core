@@ -187,7 +187,8 @@ float UPurpleprintCoreRandom::RandomFloatRangeStream(FRandomStream const& Stream
 	return Stream.FRandRange(Range.GetLowerBoundValue(), Range.GetUpperBoundValue());
 }
 
-FVector2D UPurpleprintCoreRandom::GetRandomPointInCircle(const float Radius, const float InnerRadius) {
+FVector2D UPurpleprintCoreRandom::GetRandomPointInCircle(const float Radius, const float InnerRadius)
+{
 	float inRad = FMath::Max(InnerRadius, 0.0f);
 	float rad = FMath::Max(inRad, Radius);
 	float rCos = UPurpleprintCoreMath::CosD(FMath::FRandRange(0.0f, 359.f));
@@ -198,7 +199,8 @@ FVector2D UPurpleprintCoreRandom::GetRandomPointInCircle(const float Radius, con
 	return FVector2D(rX, rY);
 }
 
-FVector2D UPurpleprintCoreRandom::GetRandomPointInCircleStream(FRandomStream const& Stream, const float Radius, const float InnerRadius) {
+FVector2D UPurpleprintCoreRandom::GetRandomPointInCircleStream(FRandomStream const& Stream, const float Radius, const float InnerRadius)
+{
 	float inRad = FMath::Max(InnerRadius, 0.0f);
 	float rad = FMath::Max(inRad, Radius);
 	float rCos = UPurpleprintCoreMath::CosD(Stream.FRandRange(0.0f, 359.f));
@@ -209,7 +211,7 @@ FVector2D UPurpleprintCoreRandom::GetRandomPointInCircleStream(FRandomStream con
 	return FVector2D(rX, rY);
 }
 
-FVector UPurpleprintCoreRandom::GetRandomPointInSphere(const float Radius, const FVector Location)
+FVector UPurpleprintCoreRandom::GetRandomPointInSphere(const float Radius, const FVector Origin)
 {
 	float x, y, z;
 	float u = UPurpleprintCoreMath::Cbrt(FMath::FRand());
@@ -222,10 +224,10 @@ FVector UPurpleprintCoreRandom::GetRandomPointInSphere(const float Radius, const
 	y = (y / mag) * u;
 	z = (z / mag) * u;
 
-	return Location + FVector(x * Radius, y * Radius, z * Radius);
+	return Origin + FVector(x * Radius, y * Radius, z * Radius);
 }
 
-FVector UPurpleprintCoreRandom::GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius, const FVector Location)
+FVector UPurpleprintCoreRandom::GetRandomPointInSphereStream(FRandomStream const& Stream, const float Radius, const FVector Origin)
 {
 	float x, y, z;
 	float u = UPurpleprintCoreMath::Cbrt(Stream.FRand());
@@ -238,7 +240,7 @@ FVector UPurpleprintCoreRandom::GetRandomPointInSphereStream(FRandomStream const
 	y = (y / mag) * u;
 	z = (z / mag) * u;
 
-	return Location + FVector(x * Radius, y * Radius, z * Radius);
+	return Origin + FVector(x * Radius, y * Radius, z * Radius);
 }
 
 FVector UPurpleprintCoreRandom::GetRandomPointInBoundingBoxStream(FRandomStream const& Stream, const FVector BoxExtent, const FVector Origin)
@@ -249,4 +251,118 @@ FVector UPurpleprintCoreRandom::GetRandomPointInBoundingBoxStream(FRandomStream 
 	return FVector(Stream.FRandRange(boxMin.X, boxMax.X),
 		Stream.FRandRange(boxMin.Y, boxMax.Y),
 		Stream.FRandRange(boxMin.Z, boxMax.Z));
+}
+
+FVector2D UPurpleprintCoreRandom::GetRandomPointInBiasCircle(const float MinRadius, const float MaxRadius)
+{
+	const float clampedMin = FMath::Max(MinRadius, 0.0f);
+	const float clampedMax = FMath::Max(clampedMin, MaxRadius);
+
+	// Random radian angle in radians
+	float angleRad = FMath::FRandRange(0.0f, 2.0f * PI);
+
+	// Uniform distribution (sqrt)
+	float t = FMath::FRand(); // in [0,1]
+	float radius = FMath::Sqrt(FMath::Lerp(clampedMin * clampedMin, clampedMax * clampedMax, t));
+
+	float x = FMath::Cos(angleRad) * radius;
+	float y = FMath::Sin(angleRad) * radius;
+
+	return FVector2D(x, y);
+}
+
+FVector UPurpleprintCoreRandom::GetRandomPointInBiasSphere(const float MinRadius, const float MaxRadius, const FVector Origin)
+{
+	float x, y, z;
+
+	// cubical root for uniform distribution in sphere
+	float u = UPurpleprintCoreMath::Cbrt(FMath::FRand());
+	float radius = FMath::Lerp(MinRadius, MaxRadius, u);
+
+	// random unit vector in sphere
+	x = FMath::FRandRange(-1.0f, 1.0f);
+	y = FMath::FRandRange(-1.0f, 1.0f);
+	z = FMath::FRandRange(-1.0f, 1.0f);
+	float mag = FMath::Sqrt((x * x) + (y * y) + (z * z));
+
+	x = (x / mag) * radius;
+	y = (y / mag) * radius;
+	z = (z / mag) * radius;
+
+	return Origin + FVector(x, y, z);
+}
+
+FVector UPurpleprintCoreRandom::GetRandomPointInBiasBoundingBox(const FVector MinExtent, const FVector MaxExtent, const FVector Origin)
+{
+	// asimettric random point in bounding box
+	float x = FMath::FRandRange(-MaxExtent.X, MaxExtent.X);
+	if (FMath::Abs(x) < MinExtent.X)
+		x = FMath::Sign(x) * FMath::FRandRange(MinExtent.X, MaxExtent.X);
+
+	float y = FMath::FRandRange(-MaxExtent.Y, MaxExtent.Y);
+	if (FMath::Abs(y) < MinExtent.Y)
+		y = FMath::Sign(y) * FMath::FRandRange(MinExtent.Y, MaxExtent.Y);
+
+	float z = FMath::FRandRange(-MaxExtent.Z, MaxExtent.Z);
+	if (FMath::Abs(z) < MinExtent.Z)
+		z = FMath::Sign(z) * FMath::FRandRange(MinExtent.Z, MaxExtent.Z);
+
+	return Origin + FVector(x, y, z);
+}
+
+FVector2D UPurpleprintCoreRandom::GetRandomPointInBiasCircleStream(FRandomStream const& Stream, const float MinRadius, const float MaxRadius)
+{
+	const float clampedMin = FMath::Max(MinRadius, 0.0f);
+	const float clampedMax = FMath::Max(clampedMin, MaxRadius);
+
+	// Random radian angle in radians
+	float angleRad = Stream.FRandRange(0.0f, 2.0f * PI);
+
+	// Uniform distribution (sqrt)
+	float t = Stream.FRand(); // in [0,1]
+	float radius = FMath::Sqrt(FMath::Lerp(clampedMin * clampedMin, clampedMax * clampedMax, t));
+
+	float x = FMath::Cos(angleRad) * radius;
+	float y = FMath::Sin(angleRad) * radius;
+
+	return FVector2D(x, y);
+}
+
+FVector UPurpleprintCoreRandom::GetRandomPointInBiasSphereStream(FRandomStream const& Stream, const float MinRadius, const float MaxRadius, const FVector Origin)
+{
+	float x, y, z;
+
+	// cubical root for uniform distribution in sphere
+	float u = UPurpleprintCoreMath::Cbrt(Stream.FRand());
+	float radius = FMath::Lerp(MinRadius, MaxRadius, u);
+
+	// random unit vector in sphere
+	x = Stream.FRandRange(-1.0f, 1.0f);
+	y = Stream.FRandRange(-1.0f, 1.0f);
+	z = Stream.FRandRange(-1.0f, 1.0f);
+	float mag = FMath::Sqrt((x * x) + (y * y) + (z * z));
+
+	x = (x / mag) * radius;
+	y = (y / mag) * radius;
+	z = (z / mag) * radius;
+
+	return Origin + FVector(x, y, z);
+}
+
+FVector UPurpleprintCoreRandom::GetRandomPointInBiasBoundingBoxStream(FRandomStream const& Stream, const FVector MinExtent, const FVector MaxExtent, const FVector Origin)
+{
+	// asimettric random point in bounding box
+	float x = Stream.FRandRange(-MaxExtent.X, MaxExtent.X);
+	if (FMath::Abs(x) < MinExtent.X)
+		x = FMath::Sign(x) * Stream.FRandRange(MinExtent.X, MaxExtent.X);
+
+	float y = Stream.FRandRange(-MaxExtent.Y, MaxExtent.Y);
+	if (FMath::Abs(y) < MinExtent.Y)
+		y = FMath::Sign(y) * Stream.FRandRange(MinExtent.Y, MaxExtent.Y);
+
+	float z = Stream.FRandRange(-MaxExtent.Z, MaxExtent.Z);
+	if (FMath::Abs(z) < MinExtent.Z)
+		z = FMath::Sign(z) * Stream.FRandRange(MinExtent.Z, MaxExtent.Z);
+
+	return Origin + FVector(x, y, z);
 }
