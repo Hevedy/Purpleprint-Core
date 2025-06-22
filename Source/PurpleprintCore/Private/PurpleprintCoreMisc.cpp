@@ -554,6 +554,69 @@ void UPurpleprintCoreMisc::CopyParticleComponentParams(UParticleSystemComponent*
 	CopyPrimitiveComponentParams(Source, Target, false);
 }
 
+FString UPurpleprintCoreMisc::GenerateStaticMeshRefKey(const UStaticMeshComponent* MeshComp)
+{
+	if (!IsValid(MeshComp) || !MeshComp->GetStaticMesh())
+		return TEXT("Invalid");
+
+	FString key = MeshComp->GetStaticMesh()->GetPathName(); // Use the static mesh path as the key
+
+	// Add material names to the key
+	int32 numMaterials = MeshComp->GetNumMaterials();
+	for (int32 i = 0; i < numMaterials; ++i)
+	{
+		UMaterialInterface* material = MeshComp->GetMaterial(i);
+		FString matName = IsValid(material) ? material->GetPathName() : TEXT("None");
+		key += FString::Printf(TEXT("_Mat%d:%s"), i, *matName);
+	}
+
+	return key;
+}
+
+FString UPurpleprintCoreMisc::GenerateDecalRefKey(const UDecalComponent* Decal)
+{
+	if (!IsValid(Decal)) return TEXT("Invalid");
+	UMaterialInterface* mat = Decal->GetDecalMaterial();
+	return mat ? mat->GetPathName() : TEXT("None");
+}
+
+FString UPurpleprintCoreMisc::GenerateNiagaraRefKey(const UNiagaraComponent* Niagara)
+{
+	if (!IsValid(Niagara)) return TEXT("Invalid");
+	UNiagaraSystem* system = Niagara->GetAsset();
+	return system ? system->GetPathName() : TEXT("None");
+}
+
+FString UPurpleprintCoreMisc::GenerateEmitterRefKey(AEmitter* Emitter)
+{
+	if (!IsValid(Emitter)) return TEXT("Invalid");
+
+	const UParticleSystemComponent* particleComp = Emitter->GetParticleSystemComponent();
+	if (!IsValid(particleComp)) return TEXT("NoComp");
+
+	UParticleSystem* pTemplate = particleComp->Template;
+	return IsValid(pTemplate) ? pTemplate->GetPathName() : TEXT("NoTemplate");
+}
+
+FString UPurpleprintCoreMisc::GenerateGenericActorRefKey(const AActor* Actor)
+{
+	if (!IsValid(Actor)) return TEXT("Invalid");
+
+	UClass* actorClass = Actor->GetClass();
+	FString key = actorClass->GetPathName();
+
+	/*
+	if (const auto* Child = Cast<AChildActor>(Actor))
+	{
+		if (const auto* Inner = Child->GetChildActor())
+		{
+			Key += TEXT("_Child:") + Inner->GetClass()->GetPathName();
+		}
+	}*/
+
+	return key;
+}
+
 bool UPurpleprintCoreMisc::IsValidCollisionProfileName(FName ProfileName)
 {
 	FCollisionResponseTemplate Dummy;

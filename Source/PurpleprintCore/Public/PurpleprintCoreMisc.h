@@ -405,6 +405,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Component")
 	static void CopyParticleComponentParams(UParticleSystemComponent* Source, UParticleSystemComponent* Target);
 
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Component")
+	static FString GenerateStaticMeshRefKey(const UStaticMeshComponent* MeshComp);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Component")
+	static FString GenerateDecalRefKey(const UDecalComponent* Decal);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Component")
+	static FString GenerateNiagaraRefKey(const UNiagaraComponent* Niagara);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Component")
+	static FString GenerateEmitterRefKey(AEmitter* Emitter);
+
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Component")
+	static FString GenerateGenericActorRefKey(const AActor* Actor);
+
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Collison")
 	static bool IsValidCollisionProfileName(FName ProfileName);
 

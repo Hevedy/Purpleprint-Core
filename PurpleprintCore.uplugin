@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.1.1",
+	"VersionName": "1.1.5",
 	"FriendlyName": "Purpleprint - Core",
 	"Description": "Core of purpleprint elements and functions",
 	"Category": "Purpleprint",
