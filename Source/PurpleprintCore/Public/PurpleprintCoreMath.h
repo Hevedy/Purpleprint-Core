@@ -300,13 +300,13 @@ public:
 
 	/** Returns closer value in a generic way */
 	template< class T >
-	static CONSTEXPR FORCEINLINE T Closer(const T Reference, const T A, const T B) {
+	static constexpr FORCEINLINE T Closer(const T Reference, const T A, const T B) {
 		return (((Reference - A) >= (T)0) ? (Reference - A) : -(Reference - A)) <= (((Reference - B) >= (T)0) ? (Reference - B) : -(Reference - B)) ? A : B;
 	}
 
 	/** Returns further value in a generic way */
 	template< class T >
-	static CONSTEXPR FORCEINLINE T Further(const T Reference, const T A, const T B) {
+	static constexpr FORCEINLINE T Further(const T Reference, const T A, const T B) {
 		return (((Reference - A) >= (T)0) ? (Reference - A) : -(Reference - A)) >= (((Reference - B) >= (T)0) ? (Reference - B) : -(Reference - B)) ? A : B;
 	}
 
