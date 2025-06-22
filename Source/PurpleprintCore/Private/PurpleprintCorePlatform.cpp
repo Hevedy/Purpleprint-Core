@@ -334,7 +334,7 @@ bool UPurpleprintCorePlatform::SavePackages(TArray<UPackage*> Packages, bool bPr
 #if WITH_EDITORONLY_DATA
 	for(UPackage* Package : Packages)
 	{
-		if (Package && Package->IsValidLowLevel() && !Package->IsPendingKill())
+		if (IsValid(Package) && Package->IsValidLowLevel())
 		{
 			if (Package->IsDirty())
 			{
@@ -357,7 +357,7 @@ bool UPurpleprintCorePlatform::SaveObjects(TArray<UObject*> Objects, bool bPromp
 #if WITH_EDITORONLY_DATA
 	for (UObject* Object : Objects)
 	{
-		if (Object && Object->IsValidLowLevel() && !Object->IsPendingKill())
+		if (IsValid(Object) && Object->IsValidLowLevel())
 		{
 			UPackage* package = Object->GetOutermost();
 			if (package && package->IsDirty())
@@ -381,7 +381,7 @@ bool UPurpleprintCorePlatform::SavePackage(UPackage* Package, bool bPrompt)
 #if WITH_EDITORONLY_DATA
 	if (Package)
 	{
-		if (Package->IsValidLowLevel() && !Package->IsPendingKill())
+		if (IsValid(Package) && Package->IsValidLowLevel())
 		{
 			if (Package->IsDirty())
 			{
@@ -406,7 +406,7 @@ bool UPurpleprintCorePlatform::SavePackage(UPackage* Package, bool bPrompt)
 bool UPurpleprintCorePlatform::SaveObject(UObject* Object, bool bPrompt)
 {
 #if WITH_EDITORONLY_DATA
-	if (Object && Object->IsValidLowLevel() && !Object->IsPendingKill())
+	if (IsValid(Object) && Object->IsValidLowLevel())
 	{
 		UPackage* package = Object->GetOutermost();
 		return SavePackage(package, bPrompt);

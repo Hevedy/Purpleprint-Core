@@ -43,7 +43,7 @@ void UPurpleprintCoreManagerComponent::TickComponent(float DeltaTime, enum ELeve
 
 	for (AActor* Actor : ActorsPool)
 	{
-		if (Actor && !Actor->IsPendingKill())
+		if (IsValid(Actor))
 		{
 			// Call the interface function on the actor
 			IPurpleprintCoreManagerInterface::Execute_ManagerVirtualTick(Actor, DeltaTime);
@@ -78,7 +78,7 @@ void UPurpleprintCoreManagerComponent::VirtualTickEditorComponent(float DeltaTim
 
 		for (AActor* Actor : ActorsPool)
 		{
-			if (Actor && !Actor->IsPendingKill())
+			if (IsValid(Actor))
 			{
 				// Call the interface function on the actor
 				IPurpleprintCoreManagerInterface::Execute_ManagerVirtualEditorTick(Actor, DeltaTime);
@@ -102,7 +102,7 @@ void UPurpleprintCoreManagerComponent::VirtualFixedTickEditorComponent(float Del
 
 	for(AActor* Actor : ActorsPool)
 	{
-		if (Actor && !Actor->IsPendingKill())
+		if (IsValid(Actor))
 		{
 			// Call the interface function on the actor
 			IPurpleprintCoreManagerInterface::Execute_ManagerVirtualEditorFixedTick(Actor, DeltaTime);
