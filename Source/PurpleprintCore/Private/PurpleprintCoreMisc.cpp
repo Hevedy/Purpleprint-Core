@@ -58,6 +58,12 @@ PurpleprintCoreMisc.cpp
 
 #include "DrawDebugHelpers.h"
 
+#include "NiagaraDataInterfaceArrayFunctionLibrary.h"
+//#include "NiagaraFunctionLibrary.h"
+//#include "NiagaraDataInterfaceArrayFloat.h"
+//#include "NiagaraParameterCollectionInstance.h"
+//#include "NiagaraDataInterface.h"
+
 #define LOCTEXT_NAMESPACE "PurpleprintCoreMisc"
 
 FEditorCameraLocationDelegate UPurpleprintCoreMisc::EditorCameraLocationDelegate;
@@ -842,5 +848,28 @@ TArray<FTransform> UPurpleprintCoreMisc::SnapActorsToSimulatedTransform(TArray<A
 	return TArray<FTransform>();
 #endif
 }
+
+/*
+bool UPurpleprintCoreMisc::GetNiagaraVectorParamArray(UNiagaraComponent* NiagaraComponent, FName ParameterName, TArray<FVector>& OutArray)
+{
+	// use instead #include "NiagaraDataInterfaceArrayFunctionLibrary.h"
+	if (!NiagaraComponent) return false;
+
+	
+	// Get instance data
+	FNiagaraUserRedirectionParameterStore& Params = NiagaraComponent->GetOverrideParameters();
+
+	// Find the data interface
+	UNiagaraDataInterfaceArrayFloat3* VectorArrayDI = Cast<UNiagaraDataInterfaceArrayFloat3>(Params.GetDataInterface(ParameterName));
+
+	if (!VectorArrayDI) return false;
+
+	// Get array directly
+	const TArray<FVector>& InternalArray = VectorArrayDI->GetArrayReference();
+
+	OutArray = InternalArray;
+	return false;
+}
+*/
 
 #undef LOCTEXT_NAMESPACE

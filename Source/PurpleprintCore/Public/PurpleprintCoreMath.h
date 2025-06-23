@@ -129,6 +129,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
 	static FTransform TransformsCombine(const FTransform& A, const FTransform& B);
 
+	// Combines two transforms (A * B) and add location of B to A's location with optional masking
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
+	static FTransform TransformsCombineMasked(const FTransform& A, const FTransform& B, bool bLocation = true, bool bRotation = true, bool bScale = false, bool bbReturnFirst = true);
+
 	// Gets closest point on sphere surface to target
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math")
 	static FVector GetClosestPointOnSphereSurface(const FVector& SphereCenter, float SphereRadius, const FVector& TargetPoint);

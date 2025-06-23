@@ -440,4 +440,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Actor", meta = (UnsafeDuringActorConstruction = "true", DevelopmentOnly))
 	static TArray<FTransform> SnapActorsToSimulatedTransform(TArray<AActor*> Actors);
+
+	//UFUNCTION(BlueprintCallable, Category = "Purpleprint|Niagara")
+	//static bool GetNiagaraVectorParamArray(UNiagaraComponent* NiagaraComponent, FName ParameterName, TArray<FVector>& OutArray);
 };

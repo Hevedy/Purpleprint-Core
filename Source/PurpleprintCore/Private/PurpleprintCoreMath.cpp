@@ -123,6 +123,15 @@ FTransform UPurpleprintCoreMath::TransformsCombine(const FTransform& A, const FT
 	return FTransform(r, l, s);
 }
 
+FTransform UPurpleprintCoreMath::TransformsCombineMasked(const FTransform& A, const FTransform& B, bool bLocation, bool bRotation, bool bScale, bool bReturnFirst)
+{
+	FVector l = bLocation ? A.GetLocation() + B.GetLocation() : (bReturnFirst ? A.GetLocation() : B.GetLocation());
+	FQuat q = A.GetRotation() * B.GetRotation();
+	FRotator r = bRotation ? q.Rotator() : (bReturnFirst ? A.GetRotation().Rotator() : B.GetRotation().Rotator());
+	FVector s = bScale ? A.GetScale3D() * B.GetScale3D() : (bReturnFirst ? A.GetScale3D() : B.GetScale3D());
+	return FTransform(r, l, s);
+}
+
 FVector UPurpleprintCoreMath::GetClosestPointOnSphereSurface(const FVector& SphereCenter, float SphereRadius, const FVector& TargetPoint)
 {
 	FVector Direction = (TargetPoint - SphereCenter).GetSafeNormal();
