@@ -18,6 +18,9 @@ PurpleprintCoreMisc.h
 #pragma once
 
 #include "CoreMinimal.h"
+//#include "Templates/EnumRange.h"
+//#include "UObject/EnumRange.h" // For UE 4.27 and above
+//#include "EnumRange.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "UObject/Object.h"
 #include "Engine/EngineTypes.h"

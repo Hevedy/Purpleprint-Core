@@ -57,10 +57,7 @@ void UPurpleprintCoreManagerComponent::TickComponent(float DeltaTime, enum ELeve
 
 void UPurpleprintCoreManagerComponent::VirtualTickEditorComponent(float DeltaTime)
 {
-#if !WITH_EDITORONLY_DATA
-	return;
-#endif
-
+#if WITH_EDITORONLY_DATA
 	WorldCameraLocation = UPurpleprintCoreMisc::GetActiveCameraLocation(this, WorldCameraRotation);
 
 	if (!bTickActorsInEditor) return;
@@ -89,13 +86,12 @@ void UPurpleprintCoreManagerComponent::VirtualTickEditorComponent(float DeltaTim
 			}
 		}
 	}
+#endif
 }
 
 void UPurpleprintCoreManagerComponent::VirtualFixedTickEditorComponent(float DeltaTime)
 {
-#if !WITH_EDITORONLY_DATA
-	return;
-#endif
+#if WITH_EDITORONLY_DATA
 	// Override this function in derived classes to implement custom editor tick logic
 
 	if (!bFixedTickActorsInEditor) return;
@@ -112,6 +108,7 @@ void UPurpleprintCoreManagerComponent::VirtualFixedTickEditorComponent(float Del
 			RemoveActorFromPool(Actor);
 		}
 	}
+#endif
 }
 
 void UPurpleprintCoreManagerComponent::AddToPool(AActor* Actor)

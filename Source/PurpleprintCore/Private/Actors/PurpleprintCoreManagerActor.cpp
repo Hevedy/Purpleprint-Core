@@ -129,10 +129,7 @@ void APurpleprintCoreManagerActor::TickActor(float DeltaTime, ELevelTick TickTyp
 
 void APurpleprintCoreManagerActor::TickEditor(float DeltaTime)
 {
-#if !WITH_EDITORONLY_DATA
-	return;
-#endif
-
+#if WITH_EDITORONLY_DATA
 	if (!GetWorld()->IsPlayInEditor())
 	{
 		if (ManagerComp)
@@ -141,6 +138,7 @@ void APurpleprintCoreManagerActor::TickEditor(float DeltaTime)
 		}
 		// Enable editor tick
 	}
+#endif
 }
 
 APurpleprintCoreManagerActor* APurpleprintCoreManagerActor::FindPurpleprintCoreManager(UObject* WorldContext)

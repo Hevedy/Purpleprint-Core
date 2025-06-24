@@ -14,12 +14,18 @@
 		{
 			"Name": "PurpleprintCore",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64"
+			]
 		},
 		{
 			"Name": "PurpleprintCoreEditor",
 			"Type": "Editor",
-			"LoadingPhase": "PostEngineInit"
+			"LoadingPhase": "PostEngineInit",
+			"PlatformAllowList": [
+				"Win64"
+			]
 		}
 	],
 	"CanContainContent": true,
@@ -35,15 +41,5 @@
 			"Name": "Niagara",
 			"Enabled": true
 		}
-	],
-	"TargetPlatforms": [
-		"Linux",
-		"Mac",
-		"PS4",
-		"PS5",
-		"Windows",
-		"WindowsNoEditor",
-		"Switch",
-		"XboxOne"
 	]
 }
