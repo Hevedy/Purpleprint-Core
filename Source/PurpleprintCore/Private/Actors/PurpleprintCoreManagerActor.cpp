@@ -50,6 +50,7 @@ APurpleprintCoreManagerActor::APurpleprintCoreManagerActor(const class FObjectIn
 	ManagerComp = ObjectInitializer.CreateDefaultSubobject<UPurpleprintCoreManagerComponent>(this, TEXT("ManagerComp0"));
 	ManagerComp->SetAutoActivate(true);
 
+	/*
 	if (ManagerComp)
 	{
 		ManagerComp->SetDebug(bDebug);
@@ -57,7 +58,7 @@ APurpleprintCoreManagerActor::APurpleprintCoreManagerActor(const class FObjectIn
 		ManagerComp->SetTickActorsInEditor(bTickActorsInEditor);
 		ManagerComp->SetFixedTickActorsInEditor(bFixedTickActorsInEditor);
 		ManagerComp->SetVirtualEditorTickIntervalInEditor(VirtualEditorTickIntervalInEditor);
-	}
+	}*/
 }
 
 void APurpleprintCoreManagerActor::OnConstruction(const FTransform& Transform)
@@ -68,6 +69,7 @@ void APurpleprintCoreManagerActor::OnConstruction(const FTransform& Transform)
 	//Super::OnConstruction(Transform);
 	RegisterAllComponents();
 
+	/*
 	if (ManagerComp)
 	{
 		ManagerComp->SetDebug(bDebug);
@@ -75,7 +77,7 @@ void APurpleprintCoreManagerActor::OnConstruction(const FTransform& Transform)
 		ManagerComp->SetTickActorsInEditor(bTickActorsInEditor);
 		ManagerComp->SetFixedTickActorsInEditor(bFixedTickActorsInEditor);
 		ManagerComp->SetVirtualEditorTickIntervalInEditor(VirtualEditorTickIntervalInEditor);
-	}
+	}*/
 }
 
 /** Allow actors to initialize themselves on the C++ side after all of their components have been initialized, only called during gameplay */

@@ -67,6 +67,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	/*
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
 	bool bDebug = false;
 
@@ -80,7 +81,7 @@ protected:
 	bool bFixedTickActorsInEditor = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tick")
-	float VirtualEditorTickIntervalInEditor = 1.0f;
+	float VirtualEditorTickIntervalInEditor = 1.0f;*/
 
 public:
 	// Called every frame

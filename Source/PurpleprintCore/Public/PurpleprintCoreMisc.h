@@ -37,16 +37,16 @@ struct FPurpleIntRangeBound
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	int32 Min = 0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	int32 Max = 1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	int32 MinBound = 0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	int32 MaxBound = 1;
 
 	FPurpleIntRangeBound(int32 MinValue = 0, int32 MaxValue = 1, int32 MinBoundValue = 0, int32 MaxBoundValue = 1)
@@ -99,16 +99,16 @@ struct FPurpleFloatRangeBound
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	float Min = 0.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	float Max = 1.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	float MinBound = 0.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	float MaxBound = 1.0f;
 
 	FPurpleFloatRangeBound(float MinValue = 0.0f, float MaxValue = 1.0f, float MinBoundValue = 0.0f, float MaxBoundValue = 1.0f)
@@ -162,10 +162,10 @@ struct FPurpleIntRange
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	int32 Min = 0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	int32 Max = 1;
 
 	FPurpleIntRange(int32 MinValue = 0, int32 MaxValue = 1)
@@ -218,10 +218,10 @@ struct FPurpleFloatRange
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	float Min = 0.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	float Max = 1.0f;
 
 	FPurpleFloatRange(float MinValue = 0.0f, float MaxValue = 1.0f)
@@ -283,13 +283,13 @@ struct FPurpleTransformBitMask
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Channels)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Transform)
 	uint8 bLocation : 1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Channels)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Transform)
 	uint8 bRotation : 1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Channels)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Transform)
 	uint8 bScale : 1;
 
 	FPurpleTransformBitMask() :
