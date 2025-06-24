@@ -32,6 +32,290 @@ class UDecalComponent;
 class UNiagaraComponent;
 class UParticleSystemComponent;
 
+USTRUCT(BlueprintType)
+struct FPurpleIntRangeBound
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	int32 Min = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	int32 Max = 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	int32 MinBound = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	int32 MaxBound = 1;
+
+	FPurpleIntRangeBound(int32 MinValue = 0, int32 MaxValue = 1, int32 MinBoundValue = 0, int32 MaxBoundValue = 1)
+		: Min(MinValue), Max(MaxValue), MinBound(MinBoundValue), MaxBound(MaxBoundValue)
+	{}
+
+	bool operator==(const FPurpleIntRangeBound& Other) const
+	{
+		return Min == Other.Min && Max == Other.Max && MinBound == Other.MinBound && MaxBound == Other.MaxBound;
+	}
+
+	void Normalize()
+	{
+		if (Min > Max)
+		{
+			Swap(Min, Max);
+		}
+		if (MinBound > MaxBound)
+		{
+			Swap(MinBound, MaxBound);
+		}
+	}
+
+	void NormalizeClamp()
+	{
+		Normalize();
+		Min = FMath::Clamp(Min, MinBound, MaxBound);
+		Max = FMath::Clamp(Max, MinBound, MaxBound);
+	}
+
+	void Set(int32 MinValue = 0, int32 MaxValue = 1)
+	{
+		Min = MinValue;
+		Max = MaxValue;
+		NormalizeClamp();
+	}
+
+	void SetClamp(int32 MinValue = 0, int32 MaxValue = 1, int32 MinBoundValue = 0, int32 MaxBoundValue = 1)
+	{
+		Min = MinValue;
+		Max = MaxValue;
+		MinBound = MinBoundValue;
+		MaxBound = MaxBoundValue;
+		NormalizeClamp();
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FPurpleFloatRangeBound
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	float Min = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	float Max = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	float MinBound = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	float MaxBound = 1.0f;
+
+	FPurpleFloatRangeBound(float MinValue = 0.0f, float MaxValue = 1.0f, float MinBoundValue = 0.0f, float MaxBoundValue = 1.0f)
+		: Min(MinValue), Max(MaxValue), MinBound(MinBoundValue), MaxBound(MaxBoundValue)
+	{
+	}
+
+	bool operator==(const FPurpleFloatRangeBound& Other) const
+	{
+		return Min == Other.Min && Max == Other.Max && MinBound == Other.MinBound && MaxBound == Other.MaxBound;
+	}
+
+	void Normalize()
+	{
+		if (Min > Max)
+		{
+			Swap(Min, Max);
+		}
+		if (MinBound > MaxBound)
+		{
+			Swap(MinBound, MaxBound);
+		}
+	}
+
+	void NormalizeClamp()
+	{
+		Normalize();
+		Min = FMath::Clamp(Min, MinBound, MaxBound);
+		Max = FMath::Clamp(Max, MinBound, MaxBound);
+	}
+
+	void Set(float MinValue = 0.0f, float MaxValue = 1.0f)
+	{
+		Min = MinValue;
+		Max = MaxValue;
+		NormalizeClamp();
+	}
+
+	void SetClamp(float MinValue = 0.0f, float MaxValue = 1.0f, float MinBoundValue = 0.0f, float MaxBoundValue = 1.0f)
+	{
+		Min = MinValue;
+		Max = MaxValue;
+		MinBound = MinBoundValue;
+		MaxBound = MaxBoundValue;
+		NormalizeClamp();
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FPurpleIntRange
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	int32 Min = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	int32 Max = 1;
+
+	FPurpleIntRange(int32 MinValue = 0, int32 MaxValue = 1)
+		: Min(MinValue), Max(MaxValue)
+	{}
+
+	bool operator==(const FPurpleIntRange& Other) const
+	{
+		return Min == Other.Min && Max == Other.Max;
+	}
+
+	void Normalize()
+	{
+		if (Min > Max)
+		{
+			Swap(Min, Max);
+		}
+	}
+
+	void NormalizeClamp(int32 MinBoundValue = 0, int32 MaxBoundValue = 1)
+	{
+		Normalize();
+		int32 minBound = MinBoundValue;
+		int32 maxBound = MaxBoundValue;
+		if (minBound > maxBound)
+		{
+			Swap(minBound, maxBound);
+		}
+		Min = FMath::Clamp(Min, minBound, maxBound);
+		Max = FMath::Clamp(Max, minBound, maxBound);
+	}
+
+	void Set(int32 MinValue = 0, int32 MaxValue = 1)
+	{
+		Min = MinValue;
+		Max = MaxValue;
+		Normalize();
+	}
+
+	void SetClamp(int32 MinValue = 0, int32 MaxValue = 1, int32 MinBoundValue = 0, int32 MaxBoundValue = 1)
+	{
+		Min = MinValue;
+		Max = MaxValue;
+		NormalizeClamp(MinBoundValue, MaxBoundValue);
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FPurpleFloatRange
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	float Min = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Range")
+	float Max = 1.0f;
+
+	FPurpleFloatRange(float MinValue = 0.0f, float MaxValue = 1.0f)
+		: Min(MinValue), Max(MaxValue)
+	{}
+
+	bool operator==(const FPurpleFloatRange& Other) const
+	{
+		return Min == Other.Min && Max == Other.Max;
+	}
+
+	void Normalize()
+	{
+		if (Min > Max)
+		{
+			Swap(Min, Max);
+		}
+	}
+
+	void NormalizeClamp(float MinBoundValue = 0.0f, float MaxBoundValue = 1.0f)
+	{
+		Normalize();
+		float minBound = MinBoundValue;
+		float maxBound = MaxBoundValue;
+		if (minBound > maxBound)
+		{
+			Swap(minBound, maxBound);
+		}
+		Min = FMath::Clamp(Min, minBound, maxBound);
+		Max = FMath::Clamp(Max, minBound, maxBound);
+	}
+
+	void Set(float MinValue = 0.0f, float MaxValue = 1.0f)
+	{
+		Min = MinValue;
+		Max = MaxValue;
+		Normalize();
+	}
+
+	void SetClamp(float MinValue = 0.0f, float MaxValue = 1.0f, float MinBoundValue = 0.0f, float MaxBoundValue = 1.0f)
+	{
+		Min = MinValue;
+		Max = MaxValue;
+		NormalizeClamp(MinBoundValue, MaxBoundValue);
+	}
+};
+
+UENUM(BlueprintType, meta = (Bitflags))
+enum class EPurpleTransformBitMask : uint8
+{
+	eNone = 0			UMETA(DisplayName = "None"),
+	eLocation = 1 << 0	UMETA(DisplayName = "Location"),
+	eRotation = 1 << 1	UMETA(DisplayName = "Rotation"),
+	eScale = 1 << 2		UMETA(DisplayName = "Scale")
+};
+
+USTRUCT(BlueprintType)
+struct FPurpleTransformBitMask
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Channels)
+	uint8 bLocation : 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Channels)
+	uint8 bRotation : 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Channels)
+	uint8 bScale : 1;
+
+	FPurpleTransformBitMask() :
+		bLocation(true),
+		bRotation(false),
+		bScale(false)
+	{}
+
+	bool operator==(const FPurpleTransformBitMask& Other) const
+	{
+		return bLocation == Other.bLocation && bRotation == Other.bRotation 
+			&& bScale == Other.bScale;
+	}
+
+	uint8 GetBitMask() const
+	{
+		return (uint8)((bLocation ? 1 : 0) | (bRotation << 1) | (bScale << 2));
+	}
+};
+
+
+inline uint8 GetPurpleTransformBitMaskForStruct(FPurpleTransformBitMask Value)
+{
+	return (uint8)((Value.bLocation ? 1 : 0) | (Value.bRotation << 1) | (Value.bScale << 2));
+}
+
 UENUM(BlueprintType)
 enum class EPurpleCoreAlignAxis : uint8 
 {

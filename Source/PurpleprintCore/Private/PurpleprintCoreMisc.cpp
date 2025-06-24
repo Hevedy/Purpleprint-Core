@@ -208,18 +208,30 @@ FIntVector UPurpleprintCoreMisc::MinIntegerVector(FIntVector A, FIntVector B)
 
 FInt32Range UPurpleprintCoreMisc::ClampIntRange(const FInt32Range& Range, const int32 Min, const int32 Max)
 {
-	FInt32Range lRange;
-	lRange.SetLowerBoundValue(FMath::Clamp(Range.GetLowerBoundValue(), Min, Max));
-	lRange.SetUpperBoundValue(FMath::Clamp(Range.GetUpperBoundValue(), Min, Max));
-	return lRange;
+	if (Range.HasLowerBound() && Range.HasUpperBound())
+	{
+		const int32 min = FMath::Clamp(Range.GetLowerBoundValue(), Min, Max);
+		const int32 max = FMath::Clamp(Range.GetUpperBoundValue(), Min, Max);
+		return FInt32Range(min, Max);
+	}
+	else
+	{
+		return Range; // If the range does not have both bounds, return it unchanged
+	}
 }
 
 FFloatRange UPurpleprintCoreMisc::ClampFloatRange(const FFloatRange& Range, const float Min, const float Max)
 {
-	FFloatRange lRange;
-	lRange.SetLowerBoundValue(FMath::Clamp(Range.GetLowerBoundValue(), Min, Max));
-	lRange.SetUpperBoundValue(FMath::Clamp(Range.GetUpperBoundValue(), Min, Max));
-	return lRange;
+	if (Range.HasLowerBound() && Range.HasUpperBound())
+	{
+		const float min = FMath::Clamp(Range.GetLowerBoundValue(), Min, Max);
+		const float max = FMath::Clamp(Range.GetUpperBoundValue(), Min, Max);
+		return FFloatRange(min, Max);
+	}
+	else
+	{
+		return Range; // If the range does not have both bounds, return it unchanged
+	}
 }
 
 FVector2D UPurpleprintCoreMisc::ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max) 
