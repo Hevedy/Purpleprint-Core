@@ -19,6 +19,7 @@ PurpleprintCoreRandom.h
 
 #include "CoreMinimal.h"
 #include "Containers/Map.h"
+#include "PurpleprintCoreMisc.h"
 #include "PurpleprintCoreRandom.generated.h"
 
 
@@ -77,11 +78,11 @@ public:
 
 	// Returns a random integer within an integer range.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Int Range"), Category = "Purpleprint|Random")
-	static int32 RandomRange(FInt32Range Range);
+	static int32 RandomIntRange(FInt32Range Range);
 
 	// Returns a random integer within an integer range using a random stream.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Int Range Stream"), Category = "Purpleprint|Random")
-	static int32 RandomRangeStream(FRandomStream const& Stream, FInt32Range Range);
+	static int32 RandomIntRangeStream(FRandomStream const& Stream, FInt32Range Range);
 
 	// Returns a random float within a float range.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Float Range"), Category = "Purpleprint|Random")
@@ -90,6 +91,38 @@ public:
 	// Returns a random float within a float range using a random stream.
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Random Float Range Stream"), Category = "Purpleprint|Random")
 	static float RandomFloatRangeStream(FRandomStream const& Stream, FFloatRange Range);
+
+	// Returns a random integer within an integer range.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Random")
+	static int32 RandomPurpleIntRange(FPurpleIntRange Range);
+
+	// Returns a random integer within an integer range using a random stream.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Random")
+	static int32 RandomPurpleIntRangeStream(FRandomStream const& Stream, FPurpleIntRange Range);
+
+	// Returns a random float within a float range.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Random")
+	static float RandomPurpleFloatRange(FPurpleFloatRange Range);
+
+	// Returns a random float within a float range using a random stream.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Random")
+	static float RandomPurpleFloatRangeStream(FRandomStream const& Stream, FPurpleFloatRange Range);
+
+	// Returns a random integer within an integer range.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Random")
+	static int32 RandomPurpleIntRangeBound(FPurpleIntRangeBound Range);
+
+	// Returns a random integer within an integer range using a random stream.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Random")
+	static int32 RandomPurpleIntRangeBoundStream(FRandomStream const& Stream, FPurpleIntRangeBound Range);
+
+	// Returns a random float within a float range.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Random")
+	static float RandomPurpleFloatRangeBound(FPurpleFloatRangeBound Range);
+
+	// Returns a random float within a float range using a random stream.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Random")
+	static float RandomPurpleFloatRangeBoundStream(FRandomStream const& Stream, FPurpleFloatRangeBound Range);
 
 	// Returns a random point within a circle.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")

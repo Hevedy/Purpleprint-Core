@@ -167,12 +167,12 @@ FRotator UPurpleprintCoreRandom::RandomRotatorBoxStream(FRandomStream const& Str
 	return FRotator(vR.X, vR.Y, vR.Z);
 }
 
-int32 UPurpleprintCoreRandom::RandomRange(FInt32Range Range)
+int32 UPurpleprintCoreRandom::RandomIntRange(FInt32Range Range)
 {
 	return FMath::RandRange(Range.GetLowerBoundValue(), Range.GetUpperBoundValue());
 }
 
-int32 UPurpleprintCoreRandom::RandomRangeStream(FRandomStream const& Stream, FInt32Range Range)
+int32 UPurpleprintCoreRandom::RandomIntRangeStream(FRandomStream const& Stream, FInt32Range Range)
 {
 	return Stream.RandRange(Range.GetLowerBoundValue(), Range.GetUpperBoundValue());
 }
@@ -185,6 +185,46 @@ float UPurpleprintCoreRandom::RandomFloatRange(FFloatRange Range)
 float UPurpleprintCoreRandom::RandomFloatRangeStream(FRandomStream const& Stream, FFloatRange Range)
 {
 	return Stream.FRandRange(Range.GetLowerBoundValue(), Range.GetUpperBoundValue());
+}
+
+int32 UPurpleprintCoreRandom::RandomPurpleIntRange(FPurpleIntRange Range)
+{
+	return FMath::RandRange(Range.Min, Range.Max);
+}
+
+int32 UPurpleprintCoreRandom::RandomPurpleIntRangeStream(FRandomStream const& Stream, FPurpleIntRange Range)
+{
+	return Stream.RandRange(Range.Min, Range.Max);
+}
+
+float UPurpleprintCoreRandom::RandomPurpleFloatRange(FPurpleFloatRange Range)
+{
+	return FMath::FRandRange(Range.Min, Range.Max);
+}
+
+float UPurpleprintCoreRandom::RandomPurpleFloatRangeStream(FRandomStream const& Stream, FPurpleFloatRange Range)
+{
+	return Stream.FRandRange(Range.Min, Range.Max);
+}
+
+int32 UPurpleprintCoreRandom::RandomPurpleIntRangeBound(FPurpleIntRangeBound Range)
+{
+	return FMath::RandRange(Range.Min, Range.Max);
+}
+
+int32 UPurpleprintCoreRandom::RandomPurpleIntRangeBoundStream(FRandomStream const& Stream, FPurpleIntRangeBound Range)
+{
+	return Stream.RandRange(Range.Min, Range.Max);
+}
+
+float UPurpleprintCoreRandom::RandomPurpleFloatRangeBound(FPurpleFloatRangeBound Range)
+{
+	return FMath::FRandRange(Range.Min, Range.Max);
+}
+
+float UPurpleprintCoreRandom::RandomPurpleFloatRangeBoundStream(FRandomStream const& Stream, FPurpleFloatRangeBound Range)
+{
+	return Stream.FRandRange(Range.Min, Range.Max);
 }
 
 FVector2D UPurpleprintCoreRandom::GetRandomPointInCircle(const float Radius, const float InnerRadius)

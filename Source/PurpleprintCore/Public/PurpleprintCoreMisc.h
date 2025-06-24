@@ -43,10 +43,10 @@ struct FPurpleIntRangeBound
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	int32 Max = 1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
+	UPROPERTY()
 	int32 MinBound = 0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
+	UPROPERTY()
 	int32 MaxBound = 1;
 
 	FPurpleIntRangeBound(int32 MinValue = 0, int32 MaxValue = 1, int32 MinBoundValue = 0, int32 MaxBoundValue = 1)
@@ -92,6 +92,13 @@ struct FPurpleIntRangeBound
 		MaxBound = MaxBoundValue;
 		NormalizeClamp();
 	}
+
+	void SetClamp(int32 MinBoundValue = 0, int32 MaxBoundValue = 1)
+	{
+		MinBound = MinBoundValue;
+		MaxBound = MaxBoundValue;
+		NormalizeClamp();
+	}
 };
 
 USTRUCT(BlueprintType)
@@ -105,10 +112,10 @@ struct FPurpleFloatRangeBound
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
 	float Max = 1.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
+	UPROPERTY()
 	float MinBound = 0.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Range)
+	UPROPERTY()
 	float MaxBound = 1.0f;
 
 	FPurpleFloatRangeBound(float MinValue = 0.0f, float MaxValue = 1.0f, float MinBoundValue = 0.0f, float MaxBoundValue = 1.0f)
@@ -151,6 +158,13 @@ struct FPurpleFloatRangeBound
 	{
 		Min = MinValue;
 		Max = MaxValue;
+		MinBound = MinBoundValue;
+		MaxBound = MaxBoundValue;
+		NormalizeClamp();
+	}
+
+	void SetClamp(float MinBoundValue = 0.0f, float MaxBoundValue = 1.0f)
+	{
 		MinBound = MinBoundValue;
 		MaxBound = MaxBoundValue;
 		NormalizeClamp();
@@ -415,7 +429,7 @@ public:
 	FVector Origin = FVector::ZeroVector;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace", meta = (EditCondition = "Direction!=EPurpleCoreAlignAxis::eFree"))
-	float Length = 500.f;
+	float Length = 1500.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trace")
 	EPurpleCoreAlignAxis Direction = EPurpleCoreAlignAxis::eFree;
@@ -449,7 +463,7 @@ public:
 	FPurpleTraceAlignStruct() 
 	{
 		Origin = FVector::ZeroVector;
-		Length = 500.f;
+		Length = 1500.f;
 		Direction = EPurpleCoreAlignAxis::eFree;
 		DirectionVector = FVector(0.f, 0.f, -1.f);
 		Channel = ETraceTypeQuery::TraceTypeQuery1;
@@ -542,6 +556,10 @@ public:
 	// Clamps a range of float between the specified minimum and maximum values.
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Range")
 	static FFloatRange ClampFloatRange(const FFloatRange& Range, const float Min, const float Max);
+
+	// Clamps a range of float between the specified minimum and maximum values.
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Range")
+	static FBox ClampBox(const FBox& Box, FVector Min, FVector Max, bool bNormalize = true);
 
     // Clamps each component of a 2D vector between the corresponding components of Min and Max.
     UFUNCTION(BlueprintCallable, Category = "Purpleprint|Vector")

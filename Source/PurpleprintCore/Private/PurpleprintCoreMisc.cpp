@@ -234,6 +234,29 @@ FFloatRange UPurpleprintCoreMisc::ClampFloatRange(const FFloatRange& Range, cons
 	}
 }
 
+FBox UPurpleprintCoreMisc::ClampBox(const FBox& Box, FVector Min, FVector Max, bool bNormalize)
+{
+	FBox local = Box;
+	if (bNormalize)
+	{
+		if (local.Min.X > local.Max.X)
+		{
+			Swap(local.Min.X, local.Max.X);
+		}
+		if (local.Min.Y > local.Max.Y)
+		{
+			Swap(local.Min.Y, local.Max.Y);
+		}
+		if (local.Min.Z > local.Max.Z)
+		{
+			Swap(local.Min.Z, local.Max.Z);
+		}
+	}
+	local.Min = ClampVector(Box.Min, Min, Max);
+	local.Max = ClampVector(Box.Max, Min, Max);
+	return local;
+}
+
 FVector2D UPurpleprintCoreMisc::ClampVector2D(FVector2D Value, FVector2D Min, FVector2D Max) 
 {
 	FVector2D local;
