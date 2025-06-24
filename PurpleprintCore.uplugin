@@ -7,7 +7,7 @@
 	"Category": "Purpleprint",
 	"CreatedBy": "Hevedy",
 	"CreatedByURL": "https://www.hevedy.com/",
-	"DocsURL": "",
+	"DocsURL": "https://www.hevedy.com/wiki/purpleprint/index.html",
 	"MarketplaceURL": "",
 	"SupportURL": "https://www.hevedy.com/about/contact.html",
 	"Modules": [
@@ -25,7 +25,7 @@
 	"CanContainContent": true,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
-	"Installed": false,
+	"Installed": true,
 	"Plugins": [
 		{
 			"Name": "CableComponent",
@@ -35,5 +35,15 @@
 			"Name": "Niagara",
 			"Enabled": true
 		}
+	],
+	"TargetPlatforms": [
+		"Linux",
+		"Mac",
+		"PS4",
+		"PS5",
+		"Windows",
+		"WindowsNoEditor",
+		"Switch",
+		"XboxOne"
 	]
 }
