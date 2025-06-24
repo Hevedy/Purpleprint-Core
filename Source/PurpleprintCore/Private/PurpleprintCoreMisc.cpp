@@ -41,7 +41,7 @@ PurpleprintCoreMisc.cpp
 #include "GameFramework/PlayerController.h"
 
 // To be able to perform regex operatins on level stream info package name
-#if WITH_EDITOR
+#if WITH_EDITORONLY_DATA
 #include "Runtime/Core/Public/Internationalization/Regex.h"
 
 #include "EditorSupportDelegates.h"
@@ -51,10 +51,10 @@ PurpleprintCoreMisc.cpp
 #include "Misc/MessageDialog.h"
 #include "AssetToolsModule.h"
 #include "PackageTools.h"
-#include "Logging/MessageLog.h"
+//#include "Logging/MessageLog.h"
 #include "AssetRegistry/AssetRegistryModule.h"
-#include "Engine/TextureRenderTarget2D.h"
 #endif
+#include "Engine/TextureRenderTarget2D.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -66,7 +66,9 @@ PurpleprintCoreMisc.cpp
 
 #define LOCTEXT_NAMESPACE "PurpleprintCoreMisc"
 
+#if WITH_EDITORONLY_DATA
 FEditorCameraLocationDelegate UPurpleprintCoreMisc::EditorCameraLocationDelegate;
+#endif
 
 UPurpleprintCoreMisc::UPurpleprintCoreMisc( const class FObjectInitializer& ObjectInitializer ) 
 {
@@ -482,7 +484,11 @@ FTransform UPurpleprintCoreMisc::GetTransformArrayAlphaLerp(const TArray<FTransf
 
 FVector UPurpleprintCoreMisc::GetActiveCameraLocation(const UObject* WorldContextObject, FRotator& Rotation)
 {
+#if WITH_EDITORONLY_DATA
 	UWorld* world = GEngine->GetWorldFromContextObjectChecked(WorldContextObject);
+#else
+	UWorld* world = WorldContextObject ? WorldContextObject->GetWorld() : nullptr;
+#endif
 
 	if (!world) return FVector::ZeroVector;
 
@@ -499,7 +505,7 @@ FVector UPurpleprintCoreMisc::GetActiveCameraLocation(const UObject* WorldContex
 		}
 	}
 
-#if WITH_EDITOR
+#if WITH_EDITORONLY_DATA
 	if (EditorCameraLocationDelegate.IsBound())
 	{
 		FTransform t = EditorCameraLocationDelegate.Execute();
@@ -600,7 +606,11 @@ FString UPurpleprintCoreMisc::GenerateStaticMeshRefKey(const UStaticMeshComponen
 	if (!IsValid(MeshComp) || !MeshComp->GetStaticMesh())
 		return TEXT("Invalid");
 
+#if WITH_EDITORONLY_DATA
 	FString key = MeshComp->GetStaticMesh()->GetPathName(); // Use the static mesh path as the key
+#else 
+	FString key = "MeshComp";
+#endif
 
 	// Add material names to the key
 	int32 numMaterials = MeshComp->GetNumMaterials();
@@ -666,7 +676,7 @@ bool UPurpleprintCoreMisc::IsValidCollisionProfileName(FName ProfileName)
 
 TArray<FName> UPurpleprintCoreMisc::GetAllCollisionProfileNames()
 {
-#if WITH_EDITOR
+#if WITH_EDITORONLY_DATA
 	TArray<TSharedPtr<FName>> SharedNames;
 	UCollisionProfile::GetProfileNames(SharedNames);
 
@@ -711,7 +721,7 @@ bool UPurpleprintCoreMisc::SetActorStaticMeshMaterials(AStaticMeshActor* Actor, 
 UTexture2D* UPurpleprintCoreMisc::ConstructTexture2DNonPowerTwo(UTextureRenderTarget2D* RT, UObject* Outer, const FString& NewTexName, EObjectFlags InObjectFlags, uint32 Flags, TArray<uint8>* AlphaOverride)
 {
 	UTexture2D* Result = NULL;
-#if WITH_EDITOR
+#if WITH_EDITORONLY_DATA
 	if (!RT)
 	{
 		return Result;
@@ -792,7 +802,7 @@ UTexture2D* UPurpleprintCoreMisc::ConstructTexture2DNonPowerTwo(UTextureRenderTa
 
 UTexture2D* UPurpleprintCoreMisc::RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly(UTextureRenderTarget2D* RenderTarget, FString InName, enum TextureCompressionSettings CompressionSettings, enum TextureMipGenSettings MipSettings)
 {
-#if WITH_EDITOR
+#if WITH_EDITORONLY_DATA
 	if (!RenderTarget)
 	{
 		FMessageLog("Blueprint").Warning(LOCTEXT("RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly_InvalidRenderTarget", "RenderTargetCreateStaticTexture2DNonPowerTwoEditorOnly: RenderTarget must be non-null."));
@@ -860,7 +870,7 @@ UTexture2D* UPurpleprintCoreMisc::RenderTargetCreateStaticTexture2DNonPowerTwoEd
 
 TArray<FTransform> UPurpleprintCoreMisc::SnapActorsToSimulatedTransform(TArray<AActor*> Actors)
 {
-#if WITH_EDITOR
+#if WITH_EDITORONLY_DATA
 	if (Actors.Num() == 0) return TArray<FTransform>();
 
 	TArray<FTransform> transforms;

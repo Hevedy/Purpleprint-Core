@@ -24,6 +24,7 @@ PurpleprintCoreManagerActor.cpp
 #include "Runtime/Core/Public/Logging/MessageLog.h"
 #include "Components/BillboardComponent.h"
 #include "PurpleprintCoreRandom.h"
+#include "Engine/World.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -143,7 +144,11 @@ void APurpleprintCoreManagerActor::TickEditor(float DeltaTime)
 
 APurpleprintCoreManagerActor* APurpleprintCoreManagerActor::FindPurpleprintCoreManager(UObject* WorldContext)
 {
+#if WITH_EDITORONLY_DATA
 	UWorld* world = GEngine->GetWorldFromContextObjectChecked(WorldContext);
+#else
+	UWorld* world = WorldContext ? WorldContext->GetWorld() : nullptr;
+#endif
 
 	if (!world) return nullptr;
 

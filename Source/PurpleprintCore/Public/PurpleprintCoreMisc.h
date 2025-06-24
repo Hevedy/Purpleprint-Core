@@ -26,6 +26,8 @@ PurpleprintCoreMisc.h
 #include "Engine/EngineTypes.h"
 #include "CollisionQueryParams.h"
 #include "PurpleprintCoreMath.h"
+#include "Engine/TextureDefines.h"
+#include "RenderUtils.h"
 #include "PurpleprintCoreMisc.generated.h"
 
 class UPrimitiveComponent;
@@ -345,7 +347,9 @@ enum class EPurpleCoreAlignAxis : uint8
 	eZN		UMETA(DisplayName = "Z-"),
 	eCustom UMETA(DisplayName = "Custom")
 };
+#if WITH_EDITORONLY_DATA
 ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreAlignAxis, EPurpleCoreAlignAxis::eFree, EPurpleCoreAlignAxis::eCustom);
+#endif
 
 UENUM(BlueprintType)
 enum class EPurpleCoreAxis : uint8 
@@ -358,7 +362,9 @@ enum class EPurpleCoreAxis : uint8
 	eZN		UMETA(DisplayName = "Z-"),
 	eCustom UMETA(DisplayName = "Custom")
 };
+#if WITH_EDITORONLY_DATA
 ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreAxis, EPurpleCoreAxis::eX, EPurpleCoreAxis::eZN);
+#endif
 
 USTRUCT(BlueprintType)
 struct FPurpleTraceStruct 
@@ -494,7 +500,9 @@ public:
 	}
 };
 
+#if WITH_EDITORONLY_DATA
 DECLARE_DELEGATE_RetVal(FTransform, FEditorCameraLocationDelegate);
+#endif
 
 UCLASS()
 class PURPLEPRINTCORE_API UPurpleprintCoreMisc : public UBlueprintFunctionLibrary 
@@ -507,7 +515,10 @@ private:
 protected:
 
 public:
+
+#if WITH_EDITORONLY_DATA
 	static FEditorCameraLocationDelegate EditorCameraLocationDelegate;
+#endif
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Utils")
 	static bool AreTransformArraysEqual(const TArray<FTransform>& A, const TArray<FTransform>& B);
