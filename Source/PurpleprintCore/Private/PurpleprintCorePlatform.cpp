@@ -17,7 +17,7 @@ PurpleprintCorePlatform.cpp
 
 
 #include "PurpleprintCorePlatform.h"
-#include "GenericPlatform/GenericApplication.h"
+
 #include "GenericPlatform/GenericPlatformDriver.h"
 #include "Widgets/SWindow.h"
 #include "Net/UnrealNetwork.h"
@@ -25,13 +25,16 @@ PurpleprintCorePlatform.cpp
 #include "Interfaces/NetworkPredictionInterface.h"
 #include "Net/OnlineEngineInterface.h"
 
+#include "Engine/Level.h"
+#include "HAL/PlatformFileManager.h"
+#include "Misc/FileHelper.h"
+
 #if WITH_EDITORONLY_DATA
 #include "AssetRegistry/AssetRegistryModule.h"
-#include "Editor.h"
+//#include "Editor.h"
 #include "PackageTools.h"
 #include "FileHelpers.h"
 #endif // WITH_EDITORONLY_DATA
-
 
 UPurpleprintCorePlatform::UPurpleprintCorePlatform(const class FObjectInitializer& ObjectInitializer) 
 {

@@ -54,8 +54,8 @@ PurpleprintCoreMisc.cpp
 //#include "Logging/MessageLog.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #endif
-#include "Engine/TextureRenderTarget2D.h"
 
+#include "Engine/TextureRenderTarget2D.h"
 #include "DrawDebugHelpers.h"
 
 #include "NiagaraDataInterfaceArrayFunctionLibrary.h"

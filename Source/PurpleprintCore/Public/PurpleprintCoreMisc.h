@@ -18,11 +18,10 @@ PurpleprintCoreMisc.h
 #pragma once
 
 #include "CoreMinimal.h"
-//#include "Templates/EnumRange.h"
-//#include "UObject/EnumRange.h" // For UE 4.27 and above
-//#include "EnumRange.h"
+#include "Misc/EnumRange.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "UObject/Object.h"
+#include "UObject/ObjectMacros.h"
 #include "Engine/EngineTypes.h"
 #include "CollisionQueryParams.h"
 #include "PurpleprintCoreMath.h"
@@ -347,9 +346,8 @@ enum class EPurpleCoreAlignAxis : uint8
 	eZN		UMETA(DisplayName = "Z-"),
 	eCustom UMETA(DisplayName = "Custom")
 };
-#if WITH_EDITORONLY_DATA
 ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreAlignAxis, EPurpleCoreAlignAxis::eFree, EPurpleCoreAlignAxis::eCustom);
-#endif
+
 
 UENUM(BlueprintType)
 enum class EPurpleCoreAxis : uint8 
@@ -362,9 +360,8 @@ enum class EPurpleCoreAxis : uint8
 	eZN		UMETA(DisplayName = "Z-"),
 	eCustom UMETA(DisplayName = "Custom")
 };
-#if WITH_EDITORONLY_DATA
 ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreAxis, EPurpleCoreAxis::eX, EPurpleCoreAxis::eZN);
-#endif
+
 
 USTRUCT(BlueprintType)
 struct FPurpleTraceStruct 

@@ -20,12 +20,16 @@ PurpleprintCoreCameraEditor.cpp
 #include "PurpleprintCoreCameraTrackerEditor.h"
 #include "Runtime/Core/Public/Logging/MessageLog.h"
 
+/*
 #include "Engine/World.h"
 #include "EditorViewportClient.h"
 #include "Editor.h"
 #include "LevelEditor.h"
 #include "LevelEditorViewport.h"
-#include "Engine/Engine.h"
+#include "Engine/Engine.h"*/
+
+#include "EditorViewportClient.h"
+#include "LevelEditorViewport.h"
 
 void FPurpleprintCoreCameraEditor::Tick(float DeltaTime)
 {

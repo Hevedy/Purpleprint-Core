@@ -19,7 +19,14 @@ PurpleprintCorePlatform.h
 #pragma once
 
 
-#include "Engine.h"
+//#include "Engine.h"
+#include "CoreMinimal.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "UObject/Object.h"
+#include "UObject/ObjectMacros.h"
+#include "UObject/Package.h"
+#include "Misc/EnumRange.h"
+#include "Engine/EngineBaseTypes.h"
 #include "GenericPlatform/GenericApplication.h"
 #include "PurpleprintCorePlatform.generated.h"
 
