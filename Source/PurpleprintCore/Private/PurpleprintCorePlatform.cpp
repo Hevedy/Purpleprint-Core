@@ -85,7 +85,7 @@ FName UPurpleprintCorePlatform::GetStreamLevelNameFromReference(const TSoftObjec
 
 FName UPurpleprintCorePlatform::GetCorrectAssetName(const FString String)
 {
-	if (String.IsEmpty()) 
+	if (!String.IsEmpty()) 
 	{
 		return FName(*FPackageName::ObjectPathToPackageName(String));
 	}
