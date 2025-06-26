@@ -85,7 +85,7 @@ FName UPurpleprintCorePlatform::GetStreamLevelNameFromReference(const TSoftObjec
 
 FName UPurpleprintCorePlatform::GetCorrectAssetName(const FString String)
 {
-	if (String != "") 
+	if (String.IsEmpty()) 
 	{
 		return FName(*FPackageName::ObjectPathToPackageName(String));
 	}
@@ -254,14 +254,14 @@ bool UPurpleprintCorePlatform::GetSupportedFullscreenResolutionsByIndex(TArray<F
 	return false;
 }
 
-int32 UPurpleprintCorePlatform::DateTimeToUnixTimeStamp(const FDateTime& _DateTime) 
+int32 UPurpleprintCorePlatform::DateTimeToUnixTimeStamp(const FDateTime& DateTime) 
 {
-	return _DateTime.ToUnixTimestamp();
+	return DateTime.ToUnixTimestamp();
 }
 
-int64 UPurpleprintCorePlatform::DateTimeToUnixTimeStamp64(const FDateTime& _DateTime) 
+int64 UPurpleprintCorePlatform::DateTimeToUnixTimeStamp64(const FDateTime& DateTime) 
 {
-	return _DateTime.ToUnixTimestamp();
+	return DateTime.ToUnixTimestamp();
 }
 
 FString UPurpleprintCorePlatform::GetCPUBrandName()
