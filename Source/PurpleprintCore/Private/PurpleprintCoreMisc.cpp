@@ -75,6 +75,42 @@ UPurpleprintCoreMisc::UPurpleprintCoreMisc( const class FObjectInitializer& Obje
 
 }
 
+FName UPurpleprintCoreMisc::EnumToNameCommonCollisionProfile(EPurpleCommonCollisionProfile EnumValue)
+{
+	//static const UEnum* enumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EPurpleCommonCollisionProfileName"), true);
+	static const UEnum* enumPtr = StaticEnum<EPurpleCommonCollisionProfile>();
+	if (!enumPtr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Enum raw name ERROR POINTER"));
+		return NAME_None;
+	}
+
+	FString fullName = enumPtr->GetNameStringByValue(static_cast<int64>(EnumValue));
+	FString shortName = fullName.RightChop(1);
+
+	return FName(*shortName);
+}
+
+EPurpleCommonCollisionProfile UPurpleprintCoreMisc::NameToEnumCommonCollisionProfile(const FName& ShortName)
+{
+	static const UEnum* enumPtr = StaticEnum<EPurpleCommonCollisionProfile>();
+	if (!enumPtr)
+	{
+		return EPurpleCommonCollisionProfile::eCustom;
+	}
+
+	// Add 'e' back
+	const FString enumNameWithPrefix = FString::Printf(TEXT("e%s"), *ShortName.ToString());
+	const int64 value = enumPtr->GetValueByName(FName(*enumNameWithPrefix));
+
+	if (value == INDEX_NONE)
+	{
+		return EPurpleCommonCollisionProfile::eCustom;
+	}
+
+	return static_cast<EPurpleCommonCollisionProfile>(value);
+}
+
 bool UPurpleprintCoreMisc::AreTransformArraysEqual(const TArray<FTransform>& A, const TArray<FTransform>& B)
 {
 	if (A.Num() != B.Num())
@@ -549,9 +585,20 @@ void UPurpleprintCoreMisc::CopyPrimitiveComponentParams(UPrimitiveComponent* Sou
 	if (!Source || !Target) return;
 	Target->SetMobility(Source->Mobility);
 	Target->DetailMode = Source->DetailMode;
-	Target->SetCollisionProfileName(Source->GetCollisionProfileName());
-	Target->SetCollisionObjectType(Source->GetCollisionObjectType());
-	Target->SetCollisionEnabled(Source->GetCollisionEnabled());
+	if (Source->GetCollisionProfileName() == NAME_None || Source->GetCollisionProfileName() == FName("Custom"))
+	{
+		Target->SetCollisionProfileName(Source->GetCollisionProfileName());
+		Target->SetCollisionObjectType(Source->GetCollisionObjectType());
+		Target->SetCollisionEnabled(Source->GetCollisionEnabled());
+		Target->SetCollisionResponseToChannels(Source->GetCollisionResponseToChannels());
+	}
+	else
+	{
+		Target->SetCollisionProfileName(Source->GetCollisionProfileName());
+		//Target->SetCollisionObjectType(Source->GetCollisionObjectType());
+		Target->SetCollisionEnabled(Source->GetCollisionEnabled()); // Isn't needed but I'm this cool
+		//Target->SetCollisionResponseToChannels(Source->GetCollisionResponseToChannels());
+	}
 	Target->bCastFarShadow = Source->bCastFarShadow;
 	Target->bCastStaticShadow = Source->bCastStaticShadow;
 	Target->bCastDynamicShadow = Source->bCastDynamicShadow;

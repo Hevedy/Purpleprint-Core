@@ -123,7 +123,7 @@ public:
 
 	// Multiplies two transforms with optional masking
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
-	static FTransform TransformsMulMasked(const FTransform& A, const FTransform& B, bool bLocation = true, bool bRotation = true, bool bScale = false, bool bbReturnFirst = true);
+	static FTransform TransformsMulMasked(const FTransform& A, const FTransform& B, bool bLocation = true, bool bRotation = true, bool bScale = false, bool bReturnFirst = true);
 
 	// Combines two transforms (A * B) and add location of B to A's location
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
@@ -131,7 +131,7 @@ public:
 
 	// Combines two transforms (A * B) and add location of B to A's location with optional masking
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Transform")
-	static FTransform TransformsCombineMasked(const FTransform& A, const FTransform& B, bool bLocation = true, bool bRotation = true, bool bScale = false, bool bbReturnFirst = true);
+	static FTransform TransformsCombineMasked(const FTransform& A, const FTransform& B, bool bLocation = true, bool bRotation = true, bool bScale = false, bool bReturnFirst = true);
 
 	// Gets closest point on sphere surface to target
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math")

@@ -334,6 +334,79 @@ inline uint8 GetPurpleTransformBitMaskForStruct(FPurpleTransformBitMask Value)
 	return (uint8)((Value.bLocation ? 1 : 0) | (Value.bRotation << 1) | (Value.bScale << 2));
 }
 
+USTRUCT(BlueprintType)
+struct FPurpleVectorBitMask
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Transform)
+	uint8 bX : 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Transform)
+	uint8 bY : 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Transform)
+	uint8 bZ : 1;
+
+	FPurpleVectorBitMask() :
+		bX(true),
+		bY(true),
+		bZ(true)
+	{
+	}
+
+	bool operator==(const FPurpleVectorBitMask& Other) const
+	{
+		return bX == Other.bX && bY == Other.bY
+			&& bZ == Other.bZ;
+	}
+
+	const
+
+		uint8 GetBitMask() const
+	{
+		return (uint8)((bX ? 1 : 0) | (bY << 1) | (bZ << 2));
+	}
+};
+
+inline uint8 GetPurpleVectorBitMaskForStruct(FPurpleVectorBitMask Value)
+{
+	return (uint8)((Value.bX ? 1 : 0) | (Value.bY << 1) | (Value.bZ << 2));
+}
+
+UENUM(BlueprintType)
+enum class EPurpleCommonCollisionProfile : uint8
+{
+	eCustom					UMETA(DisplayName = "Custom"),
+	eNoCollision			UMETA(DisplayName = "NoCollision"),
+	eBlockAll				UMETA(DisplayName = "BlockAll"),
+	eOverlapAll				UMETA(DisplayName = "OverlapAll"),
+	eBlockAllDynamic		UMETA(DisplayName = "BlockAllDynamic"),
+	eOverlapAllDynamic		UMETA(DisplayName = "OverlapAllDynamic"),
+	eIgnoreOnlyPawn			UMETA(DisplayName = "IgnoreOnlyPawn"),
+	ePawn					UMETA(DisplayName = "Pawn"),
+	eSpectator				UMETA(DisplayName = "Spectator"),
+	eCharacterMesh			UMETA(DisplayName = "CharacterMesh"),
+	ePhysicsActor			UMETA(DisplayName = "PhysicsActor"),
+	eDestructible			UMETA(DisplayName = "Destructible"),
+	eInvisibleWall			UMETA(DisplayName = "InvisibleWall"),
+	eInvisibleWallDynamic	UMETA(DisplayName = "InvisibleWallDynamic"),
+	eTrigger				UMETA(DisplayName = "Trigger"),
+	eRagdoll				UMETA(DisplayName = "Ragdoll"),
+	eVehicle				UMETA(DisplayName = "Vehicle"),
+	eUI						UMETA(DisplayName = "UI"),
+};
+ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCommonCollisionProfile, EPurpleCommonCollisionProfile::eCustom, EPurpleCommonCollisionProfile::eUI);
+
+UENUM(BlueprintType)
+enum class EPurpleCoreGenericAxis : uint8
+{
+	eX		UMETA(DisplayName = "X"),
+	eY		UMETA(DisplayName = "Y"),
+	eZ		UMETA(DisplayName = "Z")
+};
+ENUM_RANGE_BY_FIRST_AND_LAST(EPurpleCoreGenericAxis, EPurpleCoreGenericAxis::eX, EPurpleCoreGenericAxis::eZ);
+
 UENUM(BlueprintType)
 enum class EPurpleCoreAlignAxis : uint8 
 {
@@ -516,6 +589,12 @@ public:
 #if WITH_EDITORONLY_DATA
 	static FEditorCameraLocationDelegate EditorCameraLocationDelegate;
 #endif
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Placer|Utils")
+	static FName EnumToNameCommonCollisionProfile(EPurpleCommonCollisionProfile EnumValue);
+
+	UFUNCTION(BlueprintPure, Category = "Purpleprint|Placer|Utils")
+	static EPurpleCommonCollisionProfile NameToEnumCommonCollisionProfile(const FName& ShortName);
 
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Utils")
 	static bool AreTransformArraysEqual(const TArray<FTransform>& A, const TArray<FTransform>& B);
