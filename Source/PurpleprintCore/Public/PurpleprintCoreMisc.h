@@ -288,7 +288,7 @@ struct FPurpleFloatRange
 };
 
 UENUM(BlueprintType, meta = (Bitflags))
-enum class EPurpleTransformBitMask : uint8
+enum class EPurpleTransformBitMaskList : uint8
 {
 	eNone = 0			UMETA(DisplayName = "None"),
 	eLocation = 1 << 0	UMETA(DisplayName = "Location"),
