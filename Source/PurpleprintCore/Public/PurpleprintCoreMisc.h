@@ -806,6 +806,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Component")
 	static FString GenerateNiagaraRefKey(const UNiagaraComponent* Niagara);
 
+	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Placer|Component")
+	static FString GenerateParticleRefKey(const UParticleSystemComponent* Particle);
+
 	UFUNCTION(BlueprintCallable, Category = "Purpleprint|Component")
 	static FString GenerateEmitterRefKey(AEmitter* Emitter);
 

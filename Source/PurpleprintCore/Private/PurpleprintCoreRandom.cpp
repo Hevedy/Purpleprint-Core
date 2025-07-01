@@ -389,20 +389,58 @@ FVector UPurpleprintCoreRandom::GetRandomPointInBiasSphereStream(FRandomStream c
 	return Origin + FVector(x, y, z);
 }
 
-FVector UPurpleprintCoreRandom::GetRandomPointInBiasBoundingBoxStream(FRandomStream const& Stream, const FVector MinExtent, const FVector MaxExtent, const FVector Origin)
+/*
+float RandomOutsideRange(FRandomStream const& Stream, float Min, float Max)
 {
-	// asimettric random point in bounding box
-	float x = Stream.FRandRange(-MaxExtent.X, MaxExtent.X);
-	if (FMath::Abs(x) < MinExtent.X)
-		x = FMath::Sign(x) * Stream.FRandRange(MinExtent.X, MaxExtent.X);
+	// randome
+	bool negative = Stream.FRand() < 0.5f;
 
-	float y = Stream.FRandRange(-MaxExtent.Y, MaxExtent.Y);
-	if (FMath::Abs(y) < MinExtent.Y)
-		y = FMath::Sign(y) * Stream.FRandRange(MinExtent.Y, MaxExtent.Y);
+	if (negative)
+		return Stream.FRandRange(-Max, -Min);
+	else
+		return Stream.FRandRange(Min, Max);
+}
+*/
 
-	float z = Stream.FRandRange(-MaxExtent.Z, MaxExtent.Z);
-	if (FMath::Abs(z) < MinExtent.Z)
-		z = FMath::Sign(z) * Stream.FRandRange(MinExtent.Z, MaxExtent.Z);
+FVector UPurpleprintCoreRandom::GetRandomPointInBiasBoundingBoxStream(FRandomStream const& Stream, const FVector MinExtent, const FVector MaxExtent, const FVector Origin, bool bUseExpensiveMethod)
+{
+	if (!bUseExpensiveMethod)
+	{
+		// asimettric random point in bounding box
+		float x = Stream.FRandRange(-MaxExtent.X, MaxExtent.X);
+		if (FMath::Abs(x) < MinExtent.X)
+			x = FMath::Sign(x) * Stream.FRandRange(MinExtent.X, MaxExtent.X);
 
-	return Origin + FVector(x, y, z);
+		float y = Stream.FRandRange(-MaxExtent.Y, MaxExtent.Y);
+		if (FMath::Abs(y) < MinExtent.Y)
+			y = FMath::Sign(y) * Stream.FRandRange(MinExtent.Y, MaxExtent.Y);
+
+		float z = Stream.FRandRange(-MaxExtent.Z, MaxExtent.Z);
+		if (FMath::Abs(z) < MinExtent.Z)
+			z = FMath::Sign(z) * Stream.FRandRange(MinExtent.Z, MaxExtent.Z);
+
+		return Origin + FVector(x, y, z);
+	}
+	else
+	{
+		FVector p;
+		do
+		{
+			p.X = Stream.FRandRange(-MaxExtent.X, MaxExtent.X);
+			p.Y = Stream.FRandRange(-MaxExtent.Y, MaxExtent.Y);
+			p.Z = Stream.FRandRange(-MaxExtent.Z, MaxExtent.Z);
+		}
+		// repeat until is inside the hole
+		while (FMath::Abs(p.X) < MinExtent.X &&
+			FMath::Abs(p.Y) < MinExtent.Y &&
+			FMath::Abs(p.Z) < MinExtent.Z);
+
+		return Origin + p;
+		/*
+		float x = RandomOutsideRange(Stream, MinExtent.X, MaxExtent.X);
+		float y = RandomOutsideRange(Stream, MinExtent.Y, MaxExtent.Y);
+		float z = RandomOutsideRange(Stream, MinExtent.Z, MaxExtent.Z);
+
+		return Origin + FVector(x, y, z);*/
+	}
 }

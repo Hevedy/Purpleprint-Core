@@ -161,7 +161,9 @@ public:
 	static FVector GetRandomPointInBiasSphereStream(FRandomStream const& Stream, const float MinRadius = 0.f, const float MaxRadius = 1.0f, 
 													const FVector Origin = FVector::ZeroVector);
 	
+	// Get random points in a box using a bias to define the minimum and maximum of it
 	UFUNCTION(BlueprintPure, Category = "Purpleprint|Math|Random")
-	static FVector GetRandomPointInBiasBoundingBoxStream(FRandomStream const& Stream, const FVector MinExtent = FVector::ZeroVector, 
-															const FVector MaxExtent = FVector(1.0f, 1.0f, 1.0f), const FVector Origin = FVector::ZeroVector);
+	static FVector GetRandomPointInBiasBoundingBoxStream(FRandomStream const& Stream, const FVector MinExtent = FVector::ZeroVector,
+		const FVector MaxExtent = FVector(1.0f, 1.0f, 1.0f), const FVector Origin = FVector::ZeroVector,
+		bool bUseExpensiveMethod = false);
 };

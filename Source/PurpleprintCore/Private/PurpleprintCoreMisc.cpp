@@ -36,6 +36,9 @@ PurpleprintCoreMisc.cpp
 #include "Particles/ParticleSystemComponent.h"
 #include "NiagaraComponent.h"
 #include "NiagaraSystem.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraDataInterfaceArrayFunctionLibrary.h"
+#include "NiagaraTypes.h"
 
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
@@ -583,8 +586,10 @@ void UPurpleprintCoreMisc::CopySceneComponentParams(USceneComponent* Source, USc
 void UPurpleprintCoreMisc::CopyPrimitiveComponentParams(UPrimitiveComponent* Source, UPrimitiveComponent* Target, bool bCopyMaterials)
 {
 	if (!Source || !Target) return;
+
 	Target->SetMobility(Source->Mobility);
-	Target->DetailMode = Source->DetailMode;
+	Target->Mobility = Source->Mobility; // Force this
+
 	if (Source->GetCollisionProfileName() == NAME_None || Source->GetCollisionProfileName() == FName("Custom"))
 	{
 		Target->SetCollisionProfileName(Source->GetCollisionProfileName());
@@ -599,11 +604,39 @@ void UPurpleprintCoreMisc::CopyPrimitiveComponentParams(UPrimitiveComponent* Sou
 		Target->SetCollisionEnabled(Source->GetCollisionEnabled()); // Isn't needed but I'm this cool
 		//Target->SetCollisionResponseToChannels(Source->GetCollisionResponseToChannels());
 	}
+
 	Target->bCastFarShadow = Source->bCastFarShadow;
 	Target->bCastStaticShadow = Source->bCastStaticShadow;
 	Target->bCastDynamicShadow = Source->bCastDynamicShadow;
 	Target->SetCastShadow(Source->CastShadow);
 	Target->SetLightingChannels(Source->LightingChannels.bChannel0, Source->LightingChannels.bChannel1, Source->LightingChannels.bChannel2);
+	Target->SetCullDistance(Source->LDMaxDrawDistance);
+
+	Target->SetLinearDamping(Source->GetLinearDamping());
+	Target->SetAngularDamping(Source->GetAngularDamping());
+	Target->SetMassScale(NAME_None, Source->GetMassScale());
+
+	Target->SetEnableGravity(Source->IsGravityEnabled());
+	Target->SetSimulatePhysics(Source->IsSimulatingPhysics());
+
+	Target->DetailMode = Source->DetailMode;
+	Target->bUseAsOccluder = Source->bUseAsOccluder;
+	Target->bTreatAsBackgroundForOcclusion = Source->bTreatAsBackgroundForOcclusion;
+
+	Target->bCastContactShadow = Source->bCastContactShadow;
+	Target->bSelfShadowOnly = Source->bSelfShadowOnly;
+	Target->bCastHiddenShadow = Source->bCastHiddenShadow;
+
+	Target->bCastFarShadow = Source->bCastFarShadow;
+	Target->bCastStaticShadow = Source->bCastStaticShadow;
+	Target->bCastDynamicShadow = Source->bCastDynamicShadow;
+	Target->bAffectDistanceFieldLighting = Source->bAffectDistanceFieldLighting;
+	Target->SetCastShadow(Source->CastShadow);
+
+	Target->SetReceivesDecals(Source->bReceivesDecals); // Maybe change directly?
+	Target->SetLightingChannels(Source->LightingChannels.bChannel0, Source->LightingChannels.bChannel1, Source->LightingChannels.bChannel2);
+	Target->bAllowCullDistanceVolume = Source->bAllowCullDistanceVolume;
+	Target->bNeverDistanceCull = Source->bNeverDistanceCull;
 	Target->SetCullDistance(Source->LDMaxDrawDistance);
 
 	if (!bCopyMaterials) return;
@@ -639,6 +672,41 @@ void UPurpleprintCoreMisc::CopyNiagaraComponentParams(UNiagaraComponent* Source,
 	if (!Source || !Target) return;
 	Target->SetAsset(Source->GetAsset());
 	CopyPrimitiveComponentParams(Source, Target, false);
+
+	const FNiagaraParameterStore& sourceStore = Source->GetOverrideParameters();
+	FNiagaraParameterStore& targetStore = Target->GetOverrideParameters();
+
+	TArray<FNiagaraVariable> parameters;
+	sourceStore.GetParameters(parameters);
+
+	for (const FNiagaraVariable& param : parameters)
+	{
+		if (!param.GetName().ToString().StartsWith(TEXT("User.")))
+			continue;
+
+		if (param.GetType() == FNiagaraTypeDefinition::GetFloatDef())
+		{
+			float value = sourceStore.GetParameterValue<float>(param);
+			targetStore.SetParameterValue<float>(value, param);
+		}
+		else if (param.GetType() == FNiagaraTypeDefinition::GetVec3Def())
+		{
+			FVector value = sourceStore.GetParameterValue<FVector>(param);
+			targetStore.SetParameterValue<FVector>(value, param);
+		}
+		else if (param.GetType() == FNiagaraTypeDefinition::GetQuatDef())
+		{
+			FQuat value = sourceStore.GetParameterValue<FQuat>(param);
+			targetStore.SetParameterValue<FQuat>(value, param);
+		}
+		else if (param.GetType() == FNiagaraTypeDefinition::GetIntDef())
+		{
+			int32 value = sourceStore.GetParameterValue<int32>(param);
+			targetStore.SetParameterValue<int32>(value, param);
+		}
+	}
+	Target->ReinitializeSystem();
+	Target->Activate(true);
 }
 
 void UPurpleprintCoreMisc::CopyParticleComponentParams(UParticleSystemComponent* Source, UParticleSystemComponent* Target)
@@ -683,6 +751,13 @@ FString UPurpleprintCoreMisc::GenerateNiagaraRefKey(const UNiagaraComponent* Nia
 	if (!IsValid(Niagara)) return TEXT("Invalid");
 	UNiagaraSystem* system = Niagara->GetAsset();
 	return system ? system->GetPathName() : TEXT("None");
+}
+
+FString UPurpleprintCoreMisc::GenerateParticleRefKey(const UParticleSystemComponent* Particle)
+{
+	if (!IsValid(Particle)) return TEXT("Invalid");
+	UParticleSystem* pTemplate = Particle->Template;
+	return IsValid(pTemplate) ? pTemplate->GetPathName() : TEXT("NoTemplate");
 }
 
 FString UPurpleprintCoreMisc::GenerateEmitterRefKey(AEmitter* Emitter)
